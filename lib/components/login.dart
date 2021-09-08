@@ -130,8 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, color: Colors.blue),
                         ),
-                        // onTap: () {
-                        // },
+                        onTap: () {
+                          toSignout();
+                        },
                       )
                     ],
                   ),
@@ -142,6 +143,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  Future<void> toSignout() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   Future<void> toSignIn() async {
@@ -166,6 +171,10 @@ class _LoginPageState extends State<LoginPage> {
           print('No user found on that email.');
         } else if (e.code == 'wrong-password') {
           print('Wrong password provided for that user');
+        } else if (e.code == 'invalid-email') {
+          print('Please enter valid email');
+        } else if (e.code == 'user-not-found') {
+          print('User not found');
         }
         WidgetProperties()
             .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
