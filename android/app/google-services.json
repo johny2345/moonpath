@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "139029742959",
+    "project_id": "moonpath-b85dc",
+    "storage_bucket": "moonpath-b85dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139029742959:android:2e3b3e16e95e59f12bd49a",
+        "android_client_info": {
+          "package_name": "com.moonpath_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139029742959-0juu9j679hcj1j4lij4hodtku4bpjegr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJWUPD8pv8mX6DPpiHkEZejMwPnMUVx-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139029742959-0juu9j679hcj1j4lij4hodtku4bpjegr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
