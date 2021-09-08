@@ -6,7 +6,7 @@ import 'package:moonpath/components/homePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-const bool USE_EMULATOR = true;
+const bool USE_EMULATOR = false;
 
 Future _connectToFirebaseEmulator() async {
   final localHostString = Platform.isAndroid ? '10.0.2.2' : 'localhost';
@@ -24,9 +24,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  if (USE_EMULATOR) {
-    await _connectToFirebaseEmulator();
-  }
+  // if (USE_EMULATOR) {
+  //   await _connectToFirebaseEmulator();
+  // }
   runApp(MyApp());
 }
 
