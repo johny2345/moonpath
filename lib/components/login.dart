@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:farmtor/components/signUp.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'package:moonpath/widgets/widgetProperties.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -39,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     // ApiProvider().signOut();
-    if (isLoading == true) {
+    if (isLoading == null) {
       return Material(
           child: Center(
         child: Image.asset(
@@ -50,7 +49,8 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('FarmTor'),
+          centerTitle: true,
+          title: Text('LOGIN'),
         ),
         body: Builder(
           builder: (BuildContext context) {
@@ -59,28 +59,31 @@ class _LoginPageState extends State<LoginPage> {
               child: SingleChildScrollView(
                 child: Container(
                   alignment: Alignment.bottomCenter,
-                  padding: const EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.all(30.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextFormField(
+                          onSaved: (String? input) {
+                            _email = input;
+                          },
                           validator: (input) {
-                            if (input!.isEmpty) {
+                            if (input == null || input.isEmpty) {
                               return 'Please provide an email';
                             }
                           },
-                          onSaved: (String? input) => _email = input,
                           decoration: InputDecoration(
                               counterText: '',
                               labelText: 'Enter email',
                               icon: new Icon(Icons.mail)),
+                          autofocus: true,
                           keyboardType: TextInputType.emailAddress,
                           maxLength: 30),
                       TextFormField(
                         validator: (input) {
-                          if (input!.isEmpty) {
+                          if (input == null || input.isEmpty) {
                             return 'Input password';
                           }
                         },
@@ -112,15 +115,12 @@ class _LoginPageState extends State<LoginPage> {
                       new Padding(
                         padding: const EdgeInsets.only(top: 40.0),
                       ),
-                      new OutlineButton(
-                        // highlightedBorderColor: Colors.deepOrange,
-                        borderSide: BorderSide(color: Colors.blue),
+                      new ElevatedButton(
+                        clipBehavior: Clip.hardEdge,
                         onPressed: () {
                           toSignIn();
                         },
-                        padding: EdgeInsets.fromLTRB(100.0, 20.0, 100.0, 20.0),
                         child: Text('LOGIN'),
-                        splashColor: Colors.deepOrange,
                       ),
                       new Padding(padding: const EdgeInsets.only(top: 20.0)),
                       new Text('Don\'t have an account?'),
@@ -145,30 +145,37 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> toSignIn() async {
-    print('email: ' + _email.toString());
-    print('password: ' + _password.toString());
     final formState = _formKey.currentState;
     if (formState!.validate()) {
       formState.save();
       setState(() {
         isLoading = true;
       });
+      print('email: ' + _email.toString());
+      print('password: ' + _password.toString());
       try {
         UserCredential user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _email.toString(), password: _password.toString());
-        setState(() {
-          isLoading = false;
-        });
-        print('-------------THE USER HAS LOGGED IN-----------------------');
-      } catch (signUpError) {
-        setState(() {
-          isLoading = false;
-        });
+        print(user);
+        print('-------------THE USER $user-----------------------');
+      } on FirebaseAuthException catch (e) {
+        print('-------------THE USER HAS NOT LOGGED IN-----------------------');
+        print(e.code);
+        if (e.code == 'user-not-found') {
+          print('No user found on that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user');
+        }
+        WidgetProperties()
+            .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
       }
       setState(() {
         isLoading = false;
       });
+    } else {
+      WidgetProperties()
+          .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
     }
   }
 }

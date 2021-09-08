@@ -9,6 +9,7 @@ import 'package:moonpath/widgets/video_background.dart';
 import 'package:moonpath/components/faq.dart';
 import 'package:moonpath/components/contactUs.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:moonpath/components/login.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key, required this.title}) : super(key: key);
@@ -146,6 +147,8 @@ class _HomepageState extends State<Homepage> {
                 title: const Text('Login'),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 },
               ),
               Divider(

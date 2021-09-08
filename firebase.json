@@ -4,12 +4,13 @@
   },
   "firestore": {
     "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "indexes": "y"
   },
   "functions": {
     "predeploy": [
       "npm --prefix \"$RESOURCE_DIR\" run lint"
-    ]
+    ],
+    "source": "functions"
   },
   "storage": {
     "rules": "storage.rules"
@@ -38,6 +39,6 @@
     }
   },
   "remoteconfig": {
-    "template": " "
+    "template": "remoteconfig.template.json"
   }
 }
