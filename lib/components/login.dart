@@ -22,14 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     // ApiProvider().signOut();
-    if (isLoading == null) {
-      return Material(
-          child: Center(
-        child: Image.asset(
-          'assets/images/unnamed.gif',
-          height: 70,
-        ),
-      ));
+    if (isLoading == true) {
+      return WidgetProperties().loadingProgress(context);
     } else {
       return Scaffold(
         appBar: AppBar(
@@ -130,16 +124,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> toSignout() async {
+    setState(() {
+      isLoading = true;
+    });
     await FirebaseAuth.instance.signOut();
+    print('logged out na chuiii');
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Future<void> toSignIn() async {
+    setState(() {
+      isLoading = true;
+    });
     final formState = _formKey.currentState;
     if (formState!.validate()) {
       formState.save();
-      setState(() {
-        isLoading = true;
-      });
       print('email: ' + _email.toString());
       print('password: ' + _password.toString());
       try {
@@ -160,6 +161,9 @@ class _LoginPageState extends State<LoginPage> {
         } else if (e.code == 'user-not-found') {
           print('User not found');
         }
+        setState(() {
+          isLoading = false;
+        });
         WidgetProperties()
             .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
       }
@@ -167,6 +171,9 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = false;
       });
     } else {
+      setState(() {
+        isLoading = false;
+      });
       WidgetProperties()
           .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
     }

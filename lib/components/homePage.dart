@@ -8,8 +8,10 @@ import 'package:moonpath/widgets/image_carousel.dart';
 import 'package:moonpath/widgets/video_background.dart';
 import 'package:moonpath/components/faq.dart';
 import 'package:moonpath/components/contactUs.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moonpath/components/login.dart';
+import 'package:moonpath/widgets/widgetProperties.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key, required this.title}) : super(key: key);
@@ -19,6 +21,9 @@ class Homepage extends StatefulWidget {
   @override
   _HomepageState createState() => _HomepageState();
 }
+
+User? user;
+bool? isLoading = false;
 
 final String lat = '9.848349546224208';
 final String long = '126.04584151732028';
@@ -53,8 +58,38 @@ _launchEmail() async {
 }
 
 class _HomepageState extends State<Homepage> {
+  Future getUser() async {
+    print('----------------------------------------------');
+    FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
+      user = checkUser;
+      if (user == null) {
+        print('----------------------------------------------');
+        print('User not logged in!');
+      } else {
+        print('----------------------------------------------');
+        print('User signed out!');
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isLoading = true;
+    getUser();
+    isLoading = false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading == true) {
+      return WidgetProperties().loadingProgress(context);
+    } else {
+      return displayHomePage(context);
+    }
+  }
+
+  Widget displayHomePage(BuildContext context) {
     final screen_size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
