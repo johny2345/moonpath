@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.bold, color: Colors.blue),
                         ),
                         onTap: () {
-                          toSignout();
+                          getUser();
                         },
                       )
                     ],
@@ -121,6 +121,20 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  Future getUser() async {
+    print('----------------------------------------------');
+    FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
+      user = checkUser;
+      if (user == null) {
+        print('----------------------------------------------');
+        print('User not logged in!');
+      } else {
+        print('----------------------------------------------');
+        print('User signed in!');
+      }
+    });
   }
 
   Future<void> toSignout() async {
@@ -147,11 +161,17 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _email.toString(), password: _password.toString());
+        setState(() {
+          isLoading = false;
+        });
+        WidgetProperties()
+            .invalidDialog(context, 'CONGRATS', 'Sulod naka choy');
         print(user);
         print('-------------THE USER $user-----------------------');
       } on FirebaseAuthException catch (e) {
         print('-------------THE USER HAS NOT LOGGED IN-----------------------');
         print(e.code);
+        print('-------------THE USER HAS NOT LOGGED IN-----------------------');
         if (e.code == 'user-not-found') {
           print('No user found on that email.');
         } else if (e.code == 'wrong-password') {

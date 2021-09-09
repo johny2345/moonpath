@@ -67,7 +67,7 @@ class _HomepageState extends State<Homepage> {
         print('User not logged in!');
       } else {
         print('----------------------------------------------');
-        print('User signed out!');
+        print('User signed in!');
       }
     });
   }
