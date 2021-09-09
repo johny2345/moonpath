@@ -124,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future getUser() async {
-    print('----------------------------------------------');
     FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
       user = checkUser;
       if (user == null) {
