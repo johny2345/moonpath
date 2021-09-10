@@ -25,7 +25,7 @@ String? param1 = 'Request received';
 String? param2 = 'test param';
 
 String? email;
-String? contact;
+String? contactNumber;
 String? name;
 
 String? description;
@@ -59,7 +59,50 @@ class _BookPageState extends State<BookPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[],
+                children: <Widget>[
+                  TextFormField(
+                    onSaved: (String? input) {
+                      email = input;
+                    },
+                    validator: (input) {
+                      if (input == null || input.isEmpty) {
+                        return 'Please provide your email';
+                      }
+                    },
+                    decoration: InputDecoration(
+                        counterText: '',
+                        labelText: 'Enter email',
+                        icon: new Icon(Icons.email)),
+                  ),
+                  TextFormField(
+                    onSaved: (String? input) {
+                      contactNumber = input;
+                    },
+                    validator: (input) {
+                      if (input == null || input.isEmpty) {
+                        return 'Please provide your contact #';
+                      }
+                    },
+                    decoration: InputDecoration(
+                        counterText: '',
+                        labelText: 'Enter phone number',
+                        icon: new Icon(Icons.phone)),
+                  ),
+                  TextFormField(
+                    onSaved: (String? input) {
+                      name = input;
+                    },
+                    validator: (input) {
+                      if (input == null || input.isEmpty) {
+                        return 'Please provide your name';
+                      }
+                    },
+                    decoration: InputDecoration(
+                        counterText: '',
+                        labelText: 'Enter your name',
+                        icon: new Icon(Icons.email)),
+                  ),
+                ],
               ),
             ),
           ),
