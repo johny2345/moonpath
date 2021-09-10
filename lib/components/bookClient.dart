@@ -13,6 +13,22 @@ class BookPage extends StatefulWidget {
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 bool? isLoading = false;
+String? req_id = 'TEST1234';
+String? client_id = "0000018c46";
+String? notification_url = '';
+int? amount = 25000;
+String? channel = 'gcash';
+int? expiry = 2;
+String? redirect_url =
+    'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534';
+String? param1 = 'Request received';
+String? param2 = 'test param';
+
+String? email;
+String? contact;
+String? name;
+
+String? description;
 
 class _BookPageState extends State<BookPage> {
   @override
@@ -39,6 +55,12 @@ class _BookPageState extends State<BookPage> {
             child: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[],
+              ),
             ),
           ),
         );
