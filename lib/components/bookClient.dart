@@ -103,6 +103,20 @@ class _BookPageState extends State<BookPage> {
                         labelText: 'Enter your name',
                         icon: new Icon(Icons.person)),
                   ),
+                  TextFormField(
+                    onSaved: (String? input) {
+                      name = input;
+                    },
+                    validator: (input) {
+                      if (input == null || input.isEmpty) {
+                        return 'Please provide amount';
+                      }
+                    },
+                    decoration: InputDecoration(
+                        counterText: '',
+                        labelText: 'Enter amount',
+                        icon: new Icon(Icons.money)),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
