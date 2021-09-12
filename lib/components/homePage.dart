@@ -11,6 +11,7 @@ import 'package:moonpath/components/contactUs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:moonpath/components/login.dart';
+import 'package:moonpath/components/bookClient.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 
 class Homepage extends StatefulWidget {
@@ -158,6 +159,8 @@ class _HomepageState extends State<Homepage> {
                 title: const Text('Book now'),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => BookPage()));
                 },
               ),
               Divider(

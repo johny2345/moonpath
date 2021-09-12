@@ -27,8 +27,9 @@ String? param2 = 'test param';
 String? email;
 String? contactNumber;
 String? name;
-
 String? description;
+
+String? _chosenValue;
 
 class _BookPageState extends State<BookPage> {
   @override
@@ -100,7 +101,62 @@ class _BookPageState extends State<BookPage> {
                     decoration: InputDecoration(
                         counterText: '',
                         labelText: 'Enter your name',
-                        icon: new Icon(Icons.email)),
+                        icon: new Icon(Icons.person)),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                          child: DropdownButton<String>(
+                            value: _chosenValue,
+                            dropdownColor: Colors.grey[200],
+                            elevation: 3,
+                            isExpanded: true,
+                            icon: Icon(Icons.payment),
+                            items: <String>[
+                              'Gcash',
+                              'Paymaya',
+                              'Flutter',
+                              'Android'
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text("Mode of payment",
+                                style: TextStyle(
+                                  backgroundColor: Colors.grey[200],
+                                  color: Colors.black87,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.start),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _chosenValue = value;
+                              });
+                            },
+                          ),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  new ElevatedButton(
+                    clipBehavior: Clip.hardEdge,
+                    onPressed: () {
+                      // toSignIn();
+                    },
+                    child: Text('BOOK NOW'),
                   ),
                 ],
               ),
