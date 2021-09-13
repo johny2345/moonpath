@@ -120,6 +120,30 @@ class _BookPageState extends State<BookPage> {
                   SizedBox(
                     height: 20,
                   ),
+                  TextFormField(
+                    maxLines: 5,
+                    onSaved: (String? input) {
+                      description = input;
+                    },
+                    validator: (input) {
+                      if (input == null || input.isEmpty) {
+                        return 'Please provide description';
+                      }
+                    },
+                    decoration: InputDecoration(
+                      counterText: '',
+                      labelText: 'Description...',
+                      icon: new Icon(Icons.description),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
                     child: Container(
@@ -135,12 +159,12 @@ class _BookPageState extends State<BookPage> {
                             dropdownColor: Colors.grey[200],
                             elevation: 3,
                             isExpanded: true,
-                            icon: Icon(Icons.payment),
+                            icon: Icon(Icons.arrow_downward),
                             items: <String>[
                               'Gcash',
                               'Paymaya',
-                              'Flutter',
-                              'Android'
+                              'USSC',
+                              '7-eleven'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
