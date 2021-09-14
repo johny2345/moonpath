@@ -208,4 +208,30 @@ class _BookPageState extends State<BookPage> {
       },
     );
   }
+
+  Future<void> bookCustomer() async {
+    setState(() {
+      isLoading = true;
+    });
+    final formState = _formKey.currentState;
+    if (formState!.validate()) {
+      formState.save();
+      try {} catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+        WidgetProperties()
+            .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
+      }
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      WidgetProperties()
+          .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
+    }
+  }
 }

@@ -34,6 +34,8 @@ dependencies:
     map: ^1.0.0
     cached_network_image: ^3.1.0
     flutter_clean_calendar: ^1.1.0
+    retrofit: ^2.0.1
+    dio: ^4.0.0
     get: ^4.3.8
 
     # google apis
