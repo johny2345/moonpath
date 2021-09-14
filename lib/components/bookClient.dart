@@ -155,9 +155,13 @@ class _BookPageState extends State<BookPage> {
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
                           child: DropdownButton<String>(
+                            underline: Container(
+                              height: 0,
+                              color: Colors.red,
+                            ),
                             value: _chosenValue,
                             dropdownColor: Colors.grey[200],
-                            elevation: 3,
+                            elevation: 10,
                             isExpanded: true,
                             icon: Icon(Icons.arrow_downward),
                             items: <String>[

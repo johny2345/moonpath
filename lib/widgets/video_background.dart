@@ -73,17 +73,18 @@ class _VideoBackgroundState extends State<VideoBackground> {
     return Container(
       child: Center(
         child: _controller.value.isInitialized
-            ? BackgroundImage()
-            // Stack(
-            //     children: <Widget>[
-            //       AspectRatio(
-            //         aspectRatio: _controller.value.aspectRatio,
-            //         child: VideoPlayer(_controller),
-            //       ),
-            //       _getVideoBackground(),
-            //       _getBackgroundColor(),
-            //     ],
-            //   )
+            ?
+            // BackgroundImage()
+            Stack(
+                children: <Widget>[
+                  AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: VideoPlayer(_controller),
+                  ),
+                  _getVideoBackground(),
+                  _getBackgroundColor(),
+                ],
+              )
             : BackgroundImage(),
       ),
     );
