@@ -112,6 +112,7 @@ class _BookPageState extends State<BookPage> {
                         return 'Please provide amount';
                       }
                     },
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         counterText: '',
                         labelText: 'Enter amount',
