@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
+import 'package:moonpath/services/services.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -13,16 +14,6 @@ class BookPage extends StatefulWidget {
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 bool? isLoading = false;
-String? req_id = 'TEST1234';
-String? client_id = "0000018c46";
-String? notification_url = '';
-int? amount = 25000;
-String? channel = 'gcash';
-int? expiry = 2;
-String? redirect_url =
-    'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534';
-String? param1 = 'Request received';
-String? param2 = 'test param';
 
 String? email;
 String? contactNumber;

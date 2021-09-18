@@ -34,6 +34,7 @@ dependencies:
     map: ^1.0.0
     cached_network_image: ^3.1.0
     flutter_clean_calendar: ^1.1.0
+
     retrofit: ^2.0.1
     dio: ^4.0.0
     get: ^4.3.8
@@ -45,10 +46,13 @@ dependencies:
     # firebase: ^9.0.1
 
     flutter_redux: ^0.8.2
+    logger: ^1.1.0
 
 dev_dependencies:
     flutter_test:
         sdk: flutter
+    retrofit_generator: ^2.0.1+1
+    build_runner: ^2.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
