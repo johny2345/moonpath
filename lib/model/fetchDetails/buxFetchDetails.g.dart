@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'services.dart';
+part of 'buxFetchDetails.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -21,11 +21,17 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<FetchTransactionDetails>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/check_code',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<List<FetchTransactionDetails>>(Options(
+                method: 'GET',
+                headers: <String, dynamic>{
+                  r'Content-Type': 'application/json',
+                  r'x-api-key': '04e2f5c9afdf4df8a6b119f1b3267b8e'
+                },
+                extra: _extra,
+                contentType: 'application/json')
+            .compose(_dio.options, '/check_code',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
         .map((dynamic i) =>
             FetchTransactionDetails.fromJson(i as Map<String, dynamic>))

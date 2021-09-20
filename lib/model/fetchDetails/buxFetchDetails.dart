@@ -1,4 +1,21 @@
 import 'dart:convert';
+import 'package:retrofit/retrofit.dart';
+import 'package:dio/dio.dart' hide Headers;
+import 'package:json_annotation/json_annotation.dart';
+
+part 'buxFetchDetails.g.dart';
+
+@RestApi(baseUrl: "https://api.bux.ph/v1/api/sandbox/")
+abstract class RestClient {
+  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
+
+  @GET("/check_code")
+  @Headers(<String, dynamic>{
+    "Content-Type": "application/json",
+    "x-api-key": "04e2f5c9afdf4df8a6b119f1b3267b8e"
+  })
+  Future<List<FetchTransactionDetails>> getTasks();
+}
 
 class FetchTransactionDetails {
   FetchTransactionDetails({
@@ -56,23 +73,4 @@ class FetchTransactionDetails {
         link: json["link"],
         paymentUrl: json["payment_url"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "id": id,
-        "amount": amount,
-        "ref_code": refCode,
-        "channel": channel,
-        "image_url": imageUrl,
-        "seller_name": sellerName,
-        "expiry": expiry,
-        "created": created,
-        "param1": param1,
-        "param2": param2,
-        "fee": fee,
-        "instructions": instructions,
-        "terms": terms,
-        "link": link,
-        "payment_url": paymentUrl,
-      };
 }
