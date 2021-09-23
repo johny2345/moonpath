@@ -3,6 +3,52 @@
 part of 'buxFetchDetails.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+FetchTransactionDetails _$FetchTransactionDetailsFromJson(
+        Map<String, dynamic> json) =>
+    FetchTransactionDetails(
+      status: json['status'] as String?,
+      id: json['id'] as int?,
+      amount: json['amount'] as String?,
+      refCode: json['refCode'] as String?,
+      channel: json['channel'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      sellerName: json['sellerName'] as String?,
+      expiry: json['expiry'] as String?,
+      created: json['created'] as String?,
+      param1: json['param1'] as String?,
+      param2: json['param2'] as String?,
+      fee: json['fee'] as int?,
+      instructions: json['instructions'],
+      terms: json['terms'],
+      link: json['link'] as String?,
+      paymentUrl: json['paymentUrl'] as String?,
+    );
+
+Map<String, dynamic> _$FetchTransactionDetailsToJson(
+        FetchTransactionDetails instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'id': instance.id,
+      'amount': instance.amount,
+      'refCode': instance.refCode,
+      'channel': instance.channel,
+      'imageUrl': instance.imageUrl,
+      'sellerName': instance.sellerName,
+      'expiry': instance.expiry,
+      'created': instance.created,
+      'param1': instance.param1,
+      'param2': instance.param2,
+      'fee': instance.fee,
+      'instructions': instance.instructions,
+      'terms': instance.terms,
+      'link': instance.link,
+      'paymentUrl': instance.paymentUrl,
+    };
+
+// **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
@@ -16,7 +62,7 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<List<FetchTransactionDetails>> getTasks() async {
+  Future<List<FetchTransactionDetails>> getDetails() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:moonpath/services/services.dart';
+import 'package:logger/logger.dart';
+import 'package:moonpath/model/fetchDetails/buxFetchDetails.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -188,6 +191,7 @@ class _BookPageState extends State<BookPage> {
                   new ElevatedButton(
                     clipBehavior: Clip.hardEdge,
                     onPressed: () {
+                      getDetails();
                       // toSignIn();
                     },
                     child: Text('BOOK NOW'),
@@ -199,6 +203,22 @@ class _BookPageState extends State<BookPage> {
         );
       },
     );
+  }
+
+  Future<void> getDetails() async {
+    try {
+      print('-----------GET RESPONSE---------------');
+      var response = await Dio(BaseOptions(headers: {
+        "Content-Type": "application/json",
+        'x-api-key': '04e2f5c9afdf4df8a6b119f1b3267b8e'
+      })).get(
+          'https://api.bux.ph/v1/api/sandbox/check_code?req_id=TEST1234&client_id=0000018c46&mode=API');
+      print('-----------GET RESPONSE---------------');
+      print(response);
+    } catch (e) {
+      print('-----------ERROR RESPONSE---------------');
+      print(e);
+    }
   }
 
   Future<void> bookCustomer() async {
