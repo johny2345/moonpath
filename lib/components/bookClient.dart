@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:moonpath/services/services.dart';
 import 'package:logger/logger.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -23,7 +24,10 @@ String? name;
 String? description;
 
 var _timeController = TextEditingController();
+var _dateController = TextEditingController();
+
 TimeOfDay _time = TimeOfDay.now().replacing(minute: 00);
+DateTime _date = DateTime.now();
 DateTime selectedDate = DateTime.now();
 
 String? _chosenValue;
@@ -34,11 +38,12 @@ class _BookPageState extends State<BookPage> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   _timeController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _timeController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
 
   void onTimeChanged(TimeOfDay newTime) {
     setState(() {
@@ -134,6 +139,8 @@ class _BookPageState extends State<BookPage> {
                     validator: (input) {
                       if (input == null || input.isEmpty) {
                         return 'Please provide amount';
+                      } else if (input.contains(new RegExp(r'[A-Z]'))) {
+                        return 'Please provide valid amount';
                       }
                     },
                     maxLength: 6,
@@ -146,13 +153,41 @@ class _BookPageState extends State<BookPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    readOnly: true,
-                    controller: _timeController,
-                    decoration: InputDecoration(
-                      hintText: 'Choose time',
-                      suffixIcon: IconButton(
-                          onPressed: () {
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Expanded(
+                          flex: 2,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: DateTimePicker(
+                              type: DateTimePickerType.date,
+                              //dateMask: 'yyyy/MM/dd',
+                              controller: _dateController,
+                              //initialValue: _initialValue,
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2100),
+                              icon: Icon(Icons.event),
+                              dateLabelText: 'Date',
+                              // locale: Locale('pt', 'BR'),
+                              onChanged: (val) => setState(() {
+                                _date = DateTime.parse(val);
+                              }),
+                              validator: (input) {
+                                if (input == null || input == '') {
+                                  return 'Please choose date';
+                                }
+                              },
+                              // onSaved: (val) => setState(() {
+                              //   _date = DateTime.parse(val);
+                              // }),
+                            ),
+                          )),
+                      Expanded(
+                        child: TextFormField(
+                          readOnly: true,
+                          onTap: () {
                             Navigator.of(context).push(
                               showPicker(
                                 context: context,
@@ -161,32 +196,28 @@ class _BookPageState extends State<BookPage> {
                               ),
                             );
                           },
-                          icon: Icon(Icons.access_time_outlined)),
-                    ),
+                          controller: _timeController,
+                          decoration: InputDecoration(
+                            labelText: 'Time',
+                            // icon: IconButton(
+                            //     padding: EdgeInsets.all(0.0),
+                            //     color: Colors.deepPurpleAccent[300],
+                            //     highlightColor: Colors.teal,
+                            // onPressed: () {
+                            //   Navigator.of(context).push(
+                            //     showPicker(
+                            //       context: context,
+                            //       value: _time,
+                            //       onChange: onTimeChanged,
+                            //     ),
+                            //   );
+                            // },
+                            //     icon: Icon(Icons.access_time_outlined)),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Navigator.of(context).push(
-                  //       showPicker(
-                  //         context: context,
-                  //         value: _time,
-                  //         onChange: onTimeChanged,
-                  //       ),
-                  //     );
-                  //   },
-                  //   child: Text(
-                  //     "Choose time",
-                  //     style: TextStyle(color: Colors.white),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // ElevatedButton(
-                  //   onPressed: () => buildMaterialDatePicker(context),
-                  //   child: Text('Select date',
-                  //       style: TextStyle(fontWeight: FontWeight.bold)),
-                  // ),
                   SizedBox(
                     height: 20,
                   ),
@@ -267,8 +298,8 @@ class _BookPageState extends State<BookPage> {
                   new ElevatedButton(
                     clipBehavior: Clip.hardEdge,
                     onPressed: () {
-                      Apis().getDetails();
-                      // toSignIn();
+                      // Apis().getDetails();
+                      bookCustomer();
                     },
                     child: Text('BOOK NOW'),
                   ),
@@ -290,6 +321,8 @@ class _BookPageState extends State<BookPage> {
   }
 
   Future<void> bookCustomer() async {
+    print('------------------------------------------');
+    print('get data: $_date $_timeController $_time');
     setState(() {
       isLoading = true;
     });
@@ -315,19 +348,3 @@ class _BookPageState extends State<BookPage> {
     }
   }
 }
-
-
-// try {
-//       print('-----------GET RESPONSE---------------');
-//       Dio dio;
-//       Response response = await Dio(BaseOptions(headers: {
-//         "Content-Type": "application/json",
-//         'x-api-key': '04e2f5c9afdf4df8a6b119f1b3267b8ed'
-//       })).get(
-//           'https://api.bux.ph/v1/api/sandbox/check_code?req_id=TEST1234&client_id=0000018c46&mode=API');
-//       print('-----------GET RESPONSE 2---------------');
-//       print(response);
-//       // print(response.data['status']);
-//       // print(response.data['image_url']);
-//       print(response.statusCode);
-//     } 

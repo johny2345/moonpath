@@ -14,6 +14,8 @@ import 'package:moonpath/components/login.dart';
 import 'package:moonpath/components/bookClient.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 
+import 'package:moonpath/components/testCal.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({Key? key, required this.title}) : super(key: key);
 
@@ -122,6 +124,8 @@ class _HomepageState extends State<Homepage> {
                 title: const Text('About Us'),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => TestCal()));
                 },
               ),
               Divider(
