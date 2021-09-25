@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:moonpath/services/services.dart';
 import 'package:logger/logger.dart';
-import 'package:moonpath/model/fetchDetails/buxFetchDetails.dart';
-import 'package:moonpath/services/services.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -24,9 +22,37 @@ String? contactNumber;
 String? name;
 String? description;
 
+var _timeController = TextEditingController();
+TimeOfDay _time = TimeOfDay.now().replacing(minute: 00);
+DateTime selectedDate = DateTime.now();
+
 String? _chosenValue;
 
 class _BookPageState extends State<BookPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  // @override
+  // void dispose() {
+  //   _timeController.dispose();
+  //   super.dispose();
+  // }
+
+  void onTimeChanged(TimeOfDay newTime) {
+    setState(() {
+      _time = newTime;
+      _timeController.value = _timeController.value.copyWith(
+        text: _time.format(context).toString(),
+        selection: TextSelection(
+            baseOffset: _time.format(context).toString().length,
+            extentOffset: _time.toString().length),
+        composing: TextRange.empty,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
@@ -121,6 +147,50 @@ class _BookPageState extends State<BookPage> {
                     height: 20,
                   ),
                   TextFormField(
+                    readOnly: true,
+                    controller: _timeController,
+                    decoration: InputDecoration(
+                      hintText: 'Choose time',
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              showPicker(
+                                context: context,
+                                value: _time,
+                                onChange: onTimeChanged,
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.access_time_outlined)),
+                    ),
+                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).push(
+                  //       showPicker(
+                  //         context: context,
+                  //         value: _time,
+                  //         onChange: onTimeChanged,
+                  //       ),
+                  //     );
+                  //   },
+                  //   child: Text(
+                  //     "Choose time",
+                  //     style: TextStyle(color: Colors.white),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // ElevatedButton(
+                  //   onPressed: () => buildMaterialDatePicker(context),
+                  //   child: Text('Select date',
+                  //       style: TextStyle(fontWeight: FontWeight.bold)),
+                  // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
                     maxLines: 5,
                     onSaved: (String? input) {
                       description = input;
@@ -209,6 +279,14 @@ class _BookPageState extends State<BookPage> {
         );
       },
     );
+  }
+
+  bool _decideWhichDayToEnable(DateTime day) {
+    if ((day.isAfter(DateTime.now().subtract(Duration(days: 1))) &&
+        day.isBefore(DateTime.now().add(Duration(days: 250))))) {
+      return true;
+    }
+    return false;
   }
 
   Future<void> bookCustomer() async {
