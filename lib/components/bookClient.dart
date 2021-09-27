@@ -38,12 +38,12 @@ class _BookPageState extends State<BookPage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _timeController.dispose();
-    _dateController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _timeController.dispose();
+  //   _dateController.dispose();
+  //   super.dispose();
+  // }
 
   void onTimeChanged(TimeOfDay newTime) {
     setState(() {
@@ -166,11 +166,18 @@ class _BookPageState extends State<BookPage> {
                               //dateMask: 'yyyy/MM/dd',
                               controller: _dateController,
                               //initialValue: _initialValue,
-                              firstDate: DateTime(2021),
+                              firstDate: DateTime(2020),
                               lastDate: DateTime(2100),
                               icon: Icon(Icons.event),
                               dateLabelText: 'Date',
                               // locale: Locale('pt', 'BR'),
+                              selectableDayPredicate: (date) {
+                                if (date.isAfter(DateTime.now())) {
+                                  return true;
+                                } else {
+                                  return false;
+                                }
+                              },
                               onChanged: (val) => setState(() {
                                 _date = DateTime.parse(val);
                               }),
@@ -321,8 +328,13 @@ class _BookPageState extends State<BookPage> {
   }
 
   Future<void> bookCustomer() async {
+    var timeFormat = _time.format(context);
+    DateTime today = DateTime.now();
+    bool date = today.isAfter(DateTime.now());
     print('------------------------------------------');
     print('get data: $_date $_timeController $_time');
+    print('----------------->$timeFormat');
+    print(date);
     setState(() {
       isLoading = true;
     });
