@@ -172,10 +172,11 @@ class _BookPageState extends State<BookPage> {
                               dateLabelText: 'Date',
                               // locale: Locale('pt', 'BR'),
                               selectableDayPredicate: (date) {
-                                if (date.isAfter(DateTime.now())) {
-                                  return true;
-                                } else {
+                                if (date.isBefore(DateTime.now()
+                                    .subtract(Duration(days: 1)))) {
                                   return false;
+                                } else {
+                                  return true;
                                 }
                               },
                               onChanged: (val) => setState(() {
