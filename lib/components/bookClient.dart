@@ -64,6 +64,7 @@ class _BookPageState extends State<BookPage> {
       return WidgetProperties().loadingProgress(context);
     } else {
       return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Book now'),
           centerTitle: true,
