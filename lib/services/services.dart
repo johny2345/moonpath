@@ -7,7 +7,23 @@ class Apis {
   String? baseUrl = 'https://api.bux.ph/v1/api/sandbox';
   String? apiKey = '04e2f5c9afdf4df8a6b119f1b3267b8e';
 
-  Future<void> buxBookRequest() async {}
+  Future<void> buxBookRequest() async {
+    var formData = FormData.fromMap({
+      'req_id': '',
+      'client_id': '',
+      'amount': '',
+      'description': '',
+      'notification_url': '',
+      'channel': '',
+      'expiry': '',
+      'email': '',
+      'contact': '',
+      'name': '',
+      'redirect_url': '',
+      'param1': '',
+      'param2': '',
+    });
+  }
 
   Future<dynamic> getDetails() async {
     String? req_id = 'TEST1234';

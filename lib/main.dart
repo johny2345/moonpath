@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // brightness: Brightness.,
         fontFamily: 'Sansation',
-        accentColor: Colors.cyan,
         primaryTextTheme: Typography.whiteCupertino,
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

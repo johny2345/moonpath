@@ -22,6 +22,7 @@ String? email;
 String? contactNumber;
 String? name;
 String? description;
+String? paymentMethod;
 
 var _timeController = TextEditingController();
 var _dateController = TextEditingController();
@@ -29,8 +30,6 @@ var _dateController = TextEditingController();
 TimeOfDay _time = TimeOfDay.now().replacing(minute: 00);
 DateTime _date = DateTime.now();
 DateTime selectedDate = DateTime.now();
-
-String? _chosenValue;
 
 class _BookPageState extends State<BookPage> {
   @override
@@ -58,6 +57,82 @@ class _BookPageState extends State<BookPage> {
     });
   }
 
+  _buildScheduleDate() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Expanded(
+            flex: 2,
+            child: Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: DateTimePicker(
+                type: DateTimePickerType.date,
+                //dateMask: 'yyyy/MM/dd',
+                controller: _dateController,
+                //initialValue: _initialValue,
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2100),
+                icon: Icon(Icons.event),
+                dateLabelText: 'Date',
+                // locale: Locale('pt', 'BR'),
+                selectableDayPredicate: (date) {
+                  if (date
+                      .isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+                    return false;
+                  } else {
+                    return true;
+                  }
+                },
+                onChanged: (val) => setState(() {
+                  _date = DateTime.parse(val);
+                }),
+                validator: (input) {
+                  if (input == null || input == '') {
+                    return 'Please choose date';
+                  }
+                },
+                // onSaved: (val) => setState(() {
+                //   _date = DateTime.parse(val);
+                // }),
+              ),
+            )),
+        Expanded(
+          child: TextFormField(
+            readOnly: true,
+            onTap: () {
+              Navigator.of(context).push(
+                showPicker(
+                  context: context,
+                  value: _time,
+                  onChange: onTimeChanged,
+                ),
+              );
+            },
+            controller: _timeController,
+            decoration: InputDecoration(
+              labelText: 'Time',
+              // icon: IconButton(
+              //     padding: EdgeInsets.all(0.0),
+              //     color: Colors.deepPurpleAccent[300],
+              //     highlightColor: Colors.teal,
+              // onPressed: () {
+              //   Navigator.of(context).push(
+              //     showPicker(
+              //       context: context,
+              //       value: _time,
+              //       onChange: onTimeChanged,
+              //     ),
+              //   );
+              // },
+              //     icon: Icon(Icons.access_time_outlined)),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
@@ -79,10 +154,10 @@ class _BookPageState extends State<BookPage> {
       builder: (BuildContext context) {
         return Form(
           key: _formKey,
-          child: SingleChildScrollView(
-            child: Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(20.0),
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,79 +229,7 @@ class _BookPageState extends State<BookPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 10.0),
-                            child: DateTimePicker(
-                              type: DateTimePickerType.date,
-                              //dateMask: 'yyyy/MM/dd',
-                              controller: _dateController,
-                              //initialValue: _initialValue,
-                              firstDate: DateTime(2020),
-                              lastDate: DateTime(2100),
-                              icon: Icon(Icons.event),
-                              dateLabelText: 'Date',
-                              // locale: Locale('pt', 'BR'),
-                              selectableDayPredicate: (date) {
-                                if (date.isBefore(DateTime.now()
-                                    .subtract(Duration(days: 1)))) {
-                                  return false;
-                                } else {
-                                  return true;
-                                }
-                              },
-                              onChanged: (val) => setState(() {
-                                _date = DateTime.parse(val);
-                              }),
-                              validator: (input) {
-                                if (input == null || input == '') {
-                                  return 'Please choose date';
-                                }
-                              },
-                              // onSaved: (val) => setState(() {
-                              //   _date = DateTime.parse(val);
-                              // }),
-                            ),
-                          )),
-                      Expanded(
-                        child: TextFormField(
-                          readOnly: true,
-                          onTap: () {
-                            Navigator.of(context).push(
-                              showPicker(
-                                context: context,
-                                value: _time,
-                                onChange: onTimeChanged,
-                              ),
-                            );
-                          },
-                          controller: _timeController,
-                          decoration: InputDecoration(
-                            labelText: 'Time',
-                            // icon: IconButton(
-                            //     padding: EdgeInsets.all(0.0),
-                            //     color: Colors.deepPurpleAccent[300],
-                            //     highlightColor: Colors.teal,
-                            // onPressed: () {
-                            //   Navigator.of(context).push(
-                            //     showPicker(
-                            //       context: context,
-                            //       value: _time,
-                            //       onChange: onTimeChanged,
-                            //     ),
-                            //   );
-                            // },
-                            //     icon: Icon(Icons.access_time_outlined)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                  _buildScheduleDate(),
                   SizedBox(
                     height: 20,
                   ),
@@ -270,7 +273,7 @@ class _BookPageState extends State<BookPage> {
                               height: 0,
                               color: Colors.red,
                             ),
-                            value: _chosenValue,
+                            value: paymentMethod,
                             dropdownColor: Colors.grey[200],
                             elevation: 10,
                             isExpanded: true,
@@ -295,7 +298,7 @@ class _BookPageState extends State<BookPage> {
                                 textAlign: TextAlign.start),
                             onChanged: (String? value) {
                               setState(() {
-                                _chosenValue = value;
+                                paymentMethod = value;
                               });
                             },
                           ),
@@ -321,22 +324,21 @@ class _BookPageState extends State<BookPage> {
     );
   }
 
-  bool _decideWhichDayToEnable(DateTime day) {
-    if ((day.isAfter(DateTime.now().subtract(Duration(days: 1))) &&
-        day.isBefore(DateTime.now().add(Duration(days: 250))))) {
-      return true;
-    }
-    return false;
-  }
-
   Future<void> bookCustomer() async {
     var timeFormat = _time.format(context);
     DateTime today = DateTime.now();
-    bool date = today.isAfter(DateTime.now());
-    print('------------------------------------------');
+    print(today.year);
+    print(today.month);
+    print(today.year.toString() +
+        today.month.toString() +
+        today.day.toString() +
+        today.hour.toString() +
+        today.second.toString() +
+        today.millisecond.toString());
+
+    print('---------------------------$today---------------');
     print('get data: $_date $_timeController $_time');
-    print('----------------->$timeFormat');
-    print(date);
+    print('----------------->$timeFormat $paymentMethod');
     setState(() {
       isLoading = true;
     });
@@ -357,8 +359,8 @@ class _BookPageState extends State<BookPage> {
       setState(() {
         isLoading = false;
       });
-      WidgetProperties()
-          .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
+      // WidgetProperties()
+      //     .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
     }
   }
 }
