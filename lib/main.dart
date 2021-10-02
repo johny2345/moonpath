@@ -50,9 +50,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Homepage(
-        title: 'Moonpath',
-      ),
+      home: Homepage(),
     );
   }
 }

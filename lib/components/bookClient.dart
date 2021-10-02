@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:moonpath/services/services.dart';
-import 'package:logger/logger.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:moonpath/widgets/widgetProperties.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -332,6 +330,10 @@ class _BookPageState extends State<BookPage> {
   }
 
   Future<dynamic> bookCustomer() async {
+    WidgetProperties().displayAnimatedDialog(context);
+    DateTime selectedDate =
+        DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
+    print('Selected date: $selectedDate');
     String? channel, _instructions = '';
     if (paymentMethod == 'BPI') {
       setState(() {
@@ -344,6 +346,10 @@ class _BookPageState extends State<BookPage> {
     } else if (paymentMethod == 'RCBC') {
       setState(() {
         channel = 'RCBC';
+      });
+    } else if (paymentMethod == 'Gcash') {
+      setState(() {
+        channel = 'gcash';
       });
     } else if (paymentMethod == '7-eleven') {
       setState(() {
@@ -375,9 +381,8 @@ class _BookPageState extends State<BookPage> {
     if (formState!.validate()) {
       formState.save();
       try {
-        Apis().buxBookRequest(requestID, amount, description, channel, email,
-            contactNumber, name, _instructions);
-        // Apis().getDetails();
+        // Apis().buxBookRequest(requestID, amount, selectedDate, description,
+        //     channel, email, contactNumber, name, _instructions, paymentMethod);
       } catch (e) {
         setState(() {
           isLoading = false;

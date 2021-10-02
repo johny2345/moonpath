@@ -50,6 +50,7 @@ dependencies:
 
     flutter_redux: ^0.8.2
     logger: ^1.1.0
+    flutter_animated_dialog: ^2.0.1
 
 dev_dependencies:
     flutter_test:

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:logger/logger.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:moonpath/api/apiProvider.dart';
 
 class Apis {
   String? baseUrl = 'https://api.bux.ph/v1/api/sandbox';
@@ -8,8 +8,8 @@ class Apis {
   String? clientId = '0000019057';
   Dio dio = Dio();
 
-  Future<dynamic> buxBookRequest(reqId, amount, description, channel, email,
-      contact, name, instructions) async {
+  Future<dynamic> buxBookRequest(reqId, amount, selectedDate, description,
+      channel, email, contact, name, instructions, paymentMethod) async {
     String? url = '$baseUrl/generate_code';
     print(url);
 
@@ -58,6 +58,20 @@ class Apis {
           "cust_shoulder": 0
         },
       );
+      FirebaseDatabase().addBookRequest(
+          reqId,
+          amount,
+          description,
+          channel,
+          email,
+          contact,
+          name,
+          selectedDate,
+          response.data['ref_code'],
+          response.data['image_url'],
+          response.data['payment_url'],
+          response.data['status'],
+          paymentMethod);
       print(response);
       return response;
     } on DioError catch (e) {

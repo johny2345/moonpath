@@ -15,9 +15,7 @@ import 'package:moonpath/components/bookClient.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const Homepage({Key? key}) : super(key: key);
 
   @override
   _HomepageState createState() => _HomepageState();
