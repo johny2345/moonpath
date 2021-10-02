@@ -23,6 +23,7 @@ String? contactNumber;
 String? name;
 String? description;
 String? paymentMethod;
+String? amount = '25000';
 
 var _timeController = TextEditingController();
 var _dateController = TextEditingController();
@@ -180,7 +181,9 @@ class _BookPageState extends State<BookPage> {
                   ),
                   TextFormField(
                     onSaved: (String? input) {
-                      contactNumber = input;
+                      setState(() {
+                        contactNumber = input;
+                      });
                     },
                     validator: (input) {
                       if (input == null || input.isEmpty) {
@@ -211,6 +214,9 @@ class _BookPageState extends State<BookPage> {
                   TextFormField(
                     onSaved: (String? input) {
                       name = input;
+                      setState(() {
+                        amount = input;
+                      });
                     },
                     validator: (input) {
                       if (input == null || input.isEmpty) {
@@ -280,8 +286,9 @@ class _BookPageState extends State<BookPage> {
                             icon: Icon(Icons.arrow_downward),
                             items: <String>[
                               'Gcash',
-                              'Paymaya',
-                              'USSC',
+                              'BPI',
+                              'Union Bank',
+                              'RCBC',
                               '7-eleven'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
@@ -324,17 +331,39 @@ class _BookPageState extends State<BookPage> {
     );
   }
 
-  Future<void> bookCustomer() async {
+  Future<dynamic> bookCustomer() async {
+    String? channel, _instructions = '';
+    if (paymentMethod == 'BPI') {
+      setState(() {
+        channel = 'BPIA';
+      });
+    } else if (paymentMethod == 'Union Bank') {
+      setState(() {
+        channel = 'UBPB';
+      });
+    } else if (paymentMethod == 'RCBC') {
+      setState(() {
+        channel = 'RCBC';
+      });
+    } else if (paymentMethod == '7-eleven') {
+      setState(() {
+        channel = '711_direct';
+        _instructions =
+            'Present the barcode or reference number, Pay the specified amount,	The Cashier will process your payment in real-time';
+      });
+    }
     var timeFormat = _time.format(context);
     DateTime today = DateTime.now();
     print(today.year);
     print(today.month);
-    print(today.year.toString() +
+    String? requestID = 'req_' +
+        today.year.toString() +
         today.month.toString() +
         today.day.toString() +
         today.hour.toString() +
         today.second.toString() +
-        today.millisecond.toString());
+        today.millisecond.toString();
+    print(requestID);
 
     print('---------------------------$today---------------');
     print('get data: $_date $_timeController $_time');
@@ -345,7 +374,11 @@ class _BookPageState extends State<BookPage> {
     final formState = _formKey.currentState;
     if (formState!.validate()) {
       formState.save();
-      try {} catch (e) {
+      try {
+        Apis().buxBookRequest(requestID, amount, description, channel, email,
+            contactNumber, name, _instructions);
+        // Apis().getDetails();
+      } catch (e) {
         setState(() {
           isLoading = false;
         });
