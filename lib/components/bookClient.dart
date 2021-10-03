@@ -330,11 +330,29 @@ class _BookPageState extends State<BookPage> {
   }
 
   Future<dynamic> bookCustomer() async {
-    WidgetProperties().displayAnimatedDialog(context);
     DateTime selectedDate =
         DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     print('Selected date: $selectedDate');
     String? channel, _instructions = '';
+    name = "Wawangski Malakas";
+    _instructions =
+        'This is a sample description! hahahahah. The quick brown fox jumps over the lazy dog. why am I having a hard time using flutter. perhaps its because of the major change implemented by google developers to resolve the null issues that persist in most mobile applications for android and IOS. thanks you.';
+    selectedDate = DateTime.now();
+    email = 'testemail@yahoo.com';
+    amount = '40000';
+    paymentMethod = 'Gcash';
+    contactNumber = '09301325498';
+    description = 'birthday party me yowwww';
+    WidgetProperties().displayAnimatedDialog(
+        context,
+        name,
+        selectedDate,
+        description,
+        email,
+        contactNumber,
+        amount,
+        _instructions,
+        paymentMethod);
     if (paymentMethod == 'BPI') {
       setState(() {
         channel = 'BPIA';
