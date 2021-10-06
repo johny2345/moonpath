@@ -114,9 +114,13 @@ class _HomepageState extends State<Homepage> {
                   // ),
                 ),
               ),
+              Divider(
+                height: 2,
+                color: Colors.grey,
+              ),
               ListTile(
-                leading: Icon(Icons.info_outline),
-                title: const Text('About Us'),
+                leading: Icon(Icons.contact_phone),
+                title: const Text('Requests'),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -165,8 +169,8 @@ class _HomepageState extends State<Homepage> {
                 color: Colors.grey,
               ),
               ListTile(
-                leading: Icon(Icons.login),
-                title: const Text('Login'),
+                leading: Icon(Icons.logout),
+                title: const Text('Logout'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(
@@ -183,6 +187,31 @@ class _HomepageState extends State<Homepage> {
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+                actions: <Widget>[
+                  Stack(
+                    textDirection: TextDirection.rtl,
+                    fit: StackFit.loose,
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          tooltip: 'Show notification',
+                          icon: Icon(Icons.notifications_active)),
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Container(
+                            color: Colors.red,
+                            child: Text(
+                              '1',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  decorationStyle: TextDecorationStyle.wavy,
+                                  letterSpacing: 10,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ))
+                    ],
+                  )
+                ],
                 pinned: true,
                 snap: false,
                 floating: true,

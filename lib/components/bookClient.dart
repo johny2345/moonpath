@@ -399,8 +399,21 @@ class _BookPageState extends State<BookPage> {
     if (formState!.validate()) {
       formState.save();
       try {
-        // Apis().buxBookRequest(requestID, amount, selectedDate, description,
-        //     channel, email, contactNumber, name, _instructions, paymentMethod);
+        // Apis()
+        //     .buxBookRequest(
+        //         requestID,
+        //         amount,
+        //         selectedDate,
+        //         description,
+        //         channel,
+        //         email,
+        //         contactNumber,
+        //         name,
+        //         _instructions,
+        //         paymentMethod)
+        //     .then((value) {
+        //   String? paymentUrl = value.data['payment_url'];
+        // });
       } catch (e) {
         setState(() {
           isLoading = false;

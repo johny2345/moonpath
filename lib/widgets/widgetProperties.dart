@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:moonpath/components/homePage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WidgetProperties {
+  Future<void> _launchInWebViewOrVC(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url,
+          forceSafariVC: false,
+          forceWebView: false,
+          headers: <String, String>{'my_header_key': "my_header_value"});
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
     textStyle: TextStyle(
       fontSize: 10.0,
@@ -56,6 +68,14 @@ class WidgetProperties {
                 'PHP $amount',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
+              Text(paymentMethod),
+              SizedBox(
+                height: 15,
+              ),
+              Divider(
+                height: 1,
+                color: Colors.grey,
+              ),
               SizedBox(
                 height: 15,
               ),
@@ -78,6 +98,8 @@ class WidgetProperties {
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
+                      // _launchInWebViewOrVC(
+                      //     'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534');
                     },
                     child: Text(
                       'Proceed payment',
@@ -110,9 +132,13 @@ class WidgetProperties {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return SimpleDialog(
+          clipBehavior: Clip.hardEdge,
           backgroundColor: Colors.blue[100],
           insetPadding: EdgeInsets.all(10.0),
-          title: const Text('Proceed with payment'),
+          title: const Text(
+            'Checkout',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
           children: <Widget>[
             Dialog(
               insetPadding: EdgeInsets.all(10.0),
