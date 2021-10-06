@@ -58,7 +58,7 @@ class Apis {
           "cust_shoulder": 0
         },
       );
-      FirebaseDatabase().addBookRequest(
+      ApiProvider().addBookRequest(
           reqId,
           amount,
           description,

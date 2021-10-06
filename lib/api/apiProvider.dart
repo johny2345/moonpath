@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-class FirebaseDatabase {
+class ApiProvider {
   CollectionReference bookRequest =
       FirebaseFirestore.instance.collection('bookRequests');
 
@@ -48,5 +49,9 @@ class FirebaseDatabase {
 
   Future<dynamic> getSchedules() async {
     return bookRequest.orderBy('schedule').snapshots();
+  }
+
+  Future<void> logout() async {
+    return await FirebaseAuth.instance.signOut();
   }
 }

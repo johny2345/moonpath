@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
+import 'package:moonpath/components/admin/homePage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -100,18 +101,6 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Text('LOGIN'),
                       ),
-                      new Padding(padding: const EdgeInsets.only(top: 20.0)),
-                      new Text('Don\'t have an account?'),
-                      new InkWell(
-                        child: Text(
-                          'SIGN UP',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.blue),
-                        ),
-                        onTap: () {
-                          getUser();
-                        },
-                      )
                     ],
                   ),
                 ),
@@ -165,6 +154,11 @@ class _LoginPageState extends State<LoginPage> {
         });
         WidgetProperties()
             .invalidDialog(context, 'CONGRATS', 'Sulod naka choy');
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => AdminHomePage()),
+          (Route<dynamic> route) => false,
+        );
         print(user);
         print('-------------THE USER $user-----------------------');
       } on FirebaseAuthException catch (e) {
@@ -173,18 +167,24 @@ class _LoginPageState extends State<LoginPage> {
         print('-------------THE USER HAS NOT LOGGED IN-----------------------');
         if (e.code == 'user-not-found') {
           print('No user found on that email.');
+          WidgetProperties().invalidDialog(
+              context, 'ERROR CREDS', 'No user found on that email.');
         } else if (e.code == 'wrong-password') {
           print('Wrong password provided for that user');
+          WidgetProperties().invalidDialog(
+              context, 'ERROR CREDS', 'Wrong password provided for that user');
         } else if (e.code == 'invalid-email') {
           print('Please enter valid email');
+          WidgetProperties().invalidDialog(
+              context, 'ERROR CREDS', 'Please enter valid email');
         } else if (e.code == 'user-not-found') {
           print('User not found');
+          WidgetProperties()
+              .invalidDialog(context, 'ERROR CREDS', 'User not found');
         }
         setState(() {
           isLoading = false;
         });
-        WidgetProperties()
-            .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
       }
       setState(() {
         isLoading = false;
@@ -193,8 +193,8 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         isLoading = false;
       });
-      WidgetProperties()
-          .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
+      // WidgetProperties()
+      //     .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
     }
   }
 }

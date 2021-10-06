@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:moonpath/widgets/map_display.dart';
 import 'package:readmore/readmore.dart';
 import 'package:moonpath/widgets/calendar.dart';
 import 'package:moonpath/widgets/image_carousel.dart';
@@ -9,15 +10,16 @@ import 'package:moonpath/widgets/video_background.dart';
 import 'package:moonpath/components/faq.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:moonpath/components/login.dart';
+import 'package:moonpath/components/homePage.dart';
 import 'package:moonpath/components/bookClient.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
+import 'package:moonpath/api/apiProvider.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({Key? key}) : super(key: key);
 
   @override
-  _HomepageState createState() => _HomepageState();
+  _AdminHomePageState createState() => _AdminHomePageState();
 }
 
 User? user;
@@ -55,7 +57,7 @@ _launchEmail() async {
   launch("mailto:moonpathtravel@yahoo.com?subject=Moonpath query&body=");
 }
 
-class _HomepageState extends State<Homepage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   Future getUser() async {
     print('----------------------------------------------');
     FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
@@ -173,8 +175,9 @@ class _HomepageState extends State<Homepage> {
                 title: const Text('Logout'),
                 onTap: () {
                   Navigator.pop(context);
+                  ApiProvider().logout();
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginPage()));
+                      MaterialPageRoute(builder: (context) => Homepage()));
                 },
               ),
               Divider(
