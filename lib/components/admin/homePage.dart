@@ -10,6 +10,7 @@ import 'package:moonpath/widgets/video_background.dart';
 import 'package:moonpath/components/faq.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:moonpath/components/admin/clientRequest.dart';
 import 'package:moonpath/components/homePage.dart';
 import 'package:moonpath/components/bookClient.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
@@ -125,6 +126,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 title: const Text('Requests'),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ClientRequestPage()));
                 },
               ),
               Divider(

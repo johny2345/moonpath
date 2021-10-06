@@ -181,6 +181,9 @@ class _LoginPageState extends State<LoginPage> {
           print('User not found');
           WidgetProperties()
               .invalidDialog(context, 'ERROR CREDS', 'User not found');
+        } else {
+          WidgetProperties().invalidDialog(
+              context, 'ERROR CREDS', 'Please check your internet connection.');
         }
         setState(() {
           isLoading = false;
