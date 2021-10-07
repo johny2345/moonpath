@@ -3,6 +3,7 @@ import 'package:moonpath/api/apiProvider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
+import 'package:moonpath/components/admin/requestDetails.dart';
 
 class ClientRequestPage extends StatefulWidget {
   const ClientRequestPage({Key? key}) : super(key: key);
@@ -90,7 +91,9 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                   ' ' +
                   requestDate.year.toString()),
               onTap: () {
-                print(data['description']);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        ClientRequestDetailPage(details: data)));
               },
             ),
           ),
