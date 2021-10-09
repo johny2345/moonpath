@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:moonpath/services/services.dart';
 
 class ClientRequestDetailPage extends StatefulWidget {
   const ClientRequestDetailPage(
@@ -17,8 +17,16 @@ class ClientRequestDetailPage extends StatefulWidget {
 class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
   _ClientRequestDetailPageState(
       {Key? key, this.details, this.scheduleFormatted});
+
+  @override
+  initState() {
+    super.initState();
+    Apis().getDetails(details['requestId'].toString());
+  }
+
   final details;
   final scheduleFormatted;
+  bool? paymentStatusBool = false;
 
   String? channel,
       amount,
@@ -64,6 +72,12 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       _instructions = '';
     });
 
+    if (paymentStatus == "Paid") {
+      setState(() {
+        paymentStatusBool = true;
+      });
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -97,6 +111,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
               amount,
               _instructions,
               channel,
+              paymentStatusBool,
               scheduleFormatted),
         ),
         // Align(

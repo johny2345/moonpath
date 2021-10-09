@@ -86,12 +86,13 @@ class Apis {
     }
   }
 
-  Future<dynamic> getDetails() async {
-    String? reqId = 'TEST12348';
+  Future<dynamic> getDetails(reqId) async {
+    // String? reqId = 'req_2021102163190'
+    print(
+        'getDetails functions being called!----$reqId-------------------------');
     String? url =
         '$baseUrl/check_code?req_id=$reqId&client_id=$clientId&mode=API';
     try {
-      print('-----------GET RESPONSE 2---------------');
       final response = await dio.get(url,
           options: Options(
               receiveTimeout: 3000,
@@ -105,6 +106,9 @@ class Apis {
               }));
       print(response);
       print(response.data['status']);
+      if (response.data['status'].toString() == 'Paid') {
+        print('is paid------------------------');
+      }
       return response;
     } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout) {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:moonpath/components/homePage.dart';
@@ -125,6 +126,14 @@ class WidgetProperties {
     );
   }
 
+  displaySnackBar(BuildContext context, message) {
+    final snackBar = new SnackBar(
+      content: new Text(message),
+      duration: new Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   adminRequesrCheckout(
       BuildContext context,
       name,
@@ -135,6 +144,7 @@ class WidgetProperties {
       amount,
       _instructions,
       paymentMethod,
+      paymentStatus,
       scheduleFormatted) {
     return Stack(
       children: <Widget>[
@@ -174,15 +184,42 @@ class WidgetProperties {
               SizedBox(
                 height: 15,
               ),
-              Divider(
-                height: 1,
-                color: Colors.grey,
+              paymentStatus
+                  ? RichText(
+                      text: TextSpan(
+                        text: 'Payment Status: ',
+                        style: TextStyle(color: Colors.black),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Paid',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.green))
+                        ],
+                      ),
+                    )
+                  : RichText(
+                      text: TextSpan(
+                        text: 'Payment Status: ',
+                        style: TextStyle(color: Colors.black),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'Pending',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.red))
+                        ],
+                      ),
+                    ),
+              SizedBox(
+                height: 15,
               ),
               SizedBox(
                 height: 15,
               ),
-              Card(
-                shadowColor: Colors.amber,
+              Container(
                 color: Colors.grey[200],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -191,9 +228,14 @@ class WidgetProperties {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(scheduleFormatted.toString(),
-                        style: TextStyle(
-                            fontSize: 13, fontStyle: FontStyle.italic)),
+                    Text(
+                      scheduleFormatted.toString(),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
               ),
@@ -204,7 +246,7 @@ class WidgetProperties {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      displaySnackBar(context, 'Request accepted!');
                       // _launchInWebViewOrVC(
                       //     'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534');
                     },
