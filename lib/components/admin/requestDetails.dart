@@ -25,7 +25,8 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       paymentStatus,
       paymentUrl,
       refCode,
-      requestId;
+      requestId,
+      _instructions;
   DateTime? schedule, timestamp;
   bool? isAccepted;
 
@@ -39,67 +40,69 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    amount = details['amount'].toString();
-    channel = details['channel'].toString();
+    setState(() {
+      amount = details['amount'].toString();
+      channel = details['channel'].toString();
+      contact = details['description'].toString();
+      description = details['description'].toString();
+      email = details['email'].toString();
+      imageUrl = details['imageUrl'].toString();
+      name = details['name'].toString();
+      paymentStatus = details['paymentStatus'].toString();
+      paymentUrl = details['paymentUrl'].toString();
+      refCode = details['refCode'];
+      requestId = details['requestId'].toString();
+      schedule = details['schedule'].toDate();
+      timestamp = details['timestamp'].toDate();
+      isAccepted = details['isAccepted'];
+      _instructions = '';
+    });
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text('Request Details'),
         ),
-        body: _displayClientDetails(context),
+        body: displayAnimatedDialog(context),
       ),
     );
   }
 
-  displayAnimatedDialog(BuildContext context, name, selectedDate, description,
-      email, contactNumber, amount, _instructions, paymentMethod) {
-    return showAnimatedDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          clipBehavior: Clip.hardEdge,
-          backgroundColor: Colors.blue[100],
+  displayAnimatedDialog(BuildContext context) {
+    return SimpleDialog(
+      clipBehavior: Clip.hardEdge,
+      backgroundColor: Colors.blue[100],
+      insetPadding: EdgeInsets.all(10.0),
+      children: <Widget>[
+        Dialog(
           insetPadding: EdgeInsets.all(10.0),
-          title: const Text(
-            'Checkout',
-            style: TextStyle(fontWeight: FontWeight.w600),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Constants.padding),
           ),
-          children: <Widget>[
-            Dialog(
-              insetPadding: EdgeInsets.all(10.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Constants.padding),
-              ),
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              child: WidgetProperties().contentBox(
-                  context,
-                  name,
-                  selectedDate,
-                  description,
-                  email,
-                  contactNumber,
-                  amount,
-                  _instructions,
-                  paymentMethod),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                  style: WidgetProperties().buttonStyle,
-                  onPressed: () {},
-                  child: Text(
-                    'Accept',
-                    style: TextStyle(fontSize: 18),
-                  )),
-            ),
-          ],
-        );
-      },
-      animationType: DialogTransitionType.slideFromTop,
-      curve: Curves.fastOutSlowIn,
-      duration: Duration(seconds: 1),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: WidgetProperties().adminRequesrCheckout(
+              context,
+              name,
+              schedule,
+              description,
+              email,
+              contact,
+              amount,
+              _instructions,
+              channel),
+        ),
+        // Align(
+        //   alignment: Alignment.center,
+        //   child: ElevatedButton(
+        //       style: WidgetProperties().buttonStyle,
+        //       onPressed: () {},
+        //       child: Text(
+        //         'Accept',
+        //         style: TextStyle(fontSize: 18),
+        //       )),
+        // ),
+      ],
     );
   }
 

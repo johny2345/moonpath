@@ -15,6 +15,7 @@ class ClientRequestPage extends StatefulWidget {
 class _ClientRequestPageState extends State<ClientRequestPage> {
   final Stream<QuerySnapshot> _bookRequestStream = FirebaseFirestore.instance
       .collection('bookRequests')
+      .orderBy('schedule')
       .snapshots(includeMetadataChanges: true);
 
   @override
@@ -91,6 +92,7 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                   ' ' +
                   requestDate.year.toString()),
               onTap: () {
+                debugPrint(data['timestamp'].toString());
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         ClientRequestDetailPage(details: data)));

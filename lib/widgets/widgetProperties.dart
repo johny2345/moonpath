@@ -125,6 +125,99 @@ class WidgetProperties {
     );
   }
 
+  adminRequesrCheckout(BuildContext context, name, selectedDate, description,
+      email, contactNumber, amount, _instructions, paymentMethod) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.only(
+              left: Constants.padding,
+              top: Constants.avatarRadius + Constants.padding,
+              right: Constants.padding,
+              bottom: Constants.padding),
+          margin: EdgeInsets.only(top: Constants.avatarRadius),
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(Constants.padding),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black, offset: Offset(0, 10), blurRadius: 10),
+              ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                name,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              ),
+              Text(email),
+              Text(contactNumber),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'PHP $amount',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+              Text(paymentMethod),
+              SizedBox(
+                height: 15,
+              ),
+              Divider(
+                height: 1,
+                color: Colors.grey,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text(description),
+              Text(selectedDate.toString(),
+                  style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic)),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                _instructions,
+                style: TextStyle(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 22,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      // _launchInWebViewOrVC(
+                      //     'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534');
+                    },
+                    child: Text(
+                      'Accept',
+                      style: TextStyle(fontSize: 15),
+                    )),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          left: Constants.padding,
+          right: Constants.padding,
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: Constants.avatarRadius,
+            child: ClipRRect(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
+                child: Image.asset("assets/brand/person/avatar.png")),
+          ),
+        ),
+      ],
+    );
+  }
+
   displayAnimatedDialog(BuildContext context, name, selectedDate, description,
       email, contactNumber, amount, _instructions, paymentMethod) {
     return showAnimatedDialog(
