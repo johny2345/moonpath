@@ -122,25 +122,12 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 color: Colors.grey,
               ),
               ListTile(
-                leading: Icon(Icons.contact_phone),
+                leading: Icon(Icons.request_page),
                 title: const Text('Requests'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ClientRequestPage()));
-                },
-              ),
-              Divider(
-                height: 2,
-                color: Colors.grey,
-              ),
-              ListTile(
-                leading: Icon(Icons.question_answer),
-                title: const Text('FAQ'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => FaqPage()));
                 },
               ),
               Divider(

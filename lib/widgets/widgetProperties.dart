@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:moonpath/components/homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -145,7 +146,8 @@ class WidgetProperties {
       _instructions,
       paymentMethod,
       paymentStatus,
-      scheduleFormatted) {
+      scheduleFormatted,
+      paymentUrl) {
     return Stack(
       children: <Widget>[
         Container(
@@ -238,6 +240,32 @@ class WidgetProperties {
                     ),
                   ],
                 ),
+              ),
+              TextFormField(
+                  enabled: false,
+                  initialValue: paymentUrl,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    labelText: 'Payment Url',
+                  ),
+                  autofocus: true,
+                  keyboardType: TextInputType.url,
+                  maxLength: 30),
+              Align(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.purple,
+                        textStyle: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      displaySnackBar(context, 'Copied!');
+                      Clipboard.setData(ClipboardData(text: paymentUrl));
+                    },
+                    child: Text(
+                      'Copy Payment Url',
+                      style: TextStyle(fontSize: 15),
+                    )),
               ),
               SizedBox(
                 height: 25,

@@ -112,7 +112,8 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
               _instructions,
               channel,
               paymentStatusBool,
-              scheduleFormatted),
+              scheduleFormatted,
+              paymentUrl),
         ),
         // Align(
         //   alignment: Alignment.center,
