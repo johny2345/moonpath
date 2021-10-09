@@ -125,8 +125,17 @@ class WidgetProperties {
     );
   }
 
-  adminRequesrCheckout(BuildContext context, name, selectedDate, description,
-      email, contactNumber, amount, _instructions, paymentMethod) {
+  adminRequesrCheckout(
+      BuildContext context,
+      name,
+      selectedDate,
+      description,
+      email,
+      contactNumber,
+      amount,
+      _instructions,
+      paymentMethod,
+      scheduleFormatted) {
     return Stack(
       children: <Widget>[
         Container(
@@ -172,19 +181,24 @@ class WidgetProperties {
               SizedBox(
                 height: 15,
               ),
-              Text(description),
-              Text(selectedDate.toString(),
-                  style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic)),
-              SizedBox(
-                height: 15,
+              Card(
+                shadowColor: Colors.amber,
+                color: Colors.grey[200],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(description),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(scheduleFormatted.toString(),
+                        style: TextStyle(
+                            fontSize: 13, fontStyle: FontStyle.italic)),
+                  ],
+                ),
               ),
-              Text(
-                _instructions,
-                style: TextStyle(fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
               SizedBox(
-                height: 22,
+                height: 25,
               ),
               Align(
                 alignment: Alignment.center,

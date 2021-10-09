@@ -13,6 +13,8 @@ class ClientRequestPage extends StatefulWidget {
 }
 
 class _ClientRequestPageState extends State<ClientRequestPage> {
+  String? scheduleFormatted;
+
   final Stream<QuerySnapshot> _bookRequestStream = FirebaseFirestore.instance
       .collection('bookRequests')
       .orderBy('schedule')
@@ -74,6 +76,7 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
         } else if (requestDate.month == 12) {
           month = 'December';
         }
+
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
         print(data);
         return Padding(
@@ -92,10 +95,19 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                   ' ' +
                   requestDate.year.toString()),
               onTap: () {
+                setState(() {
+                  scheduleFormatted = month.toString() +
+                      ' ' +
+                      requestDate.day.toString() +
+                      ',' +
+                      ' ' +
+                      requestDate.year.toString();
+                });
+                debugPrint(scheduleFormatted);
                 debugPrint(data['timestamp'].toString());
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        ClientRequestDetailPage(details: data)));
+                    builder: (context) => ClientRequestDetailPage(
+                        details: data, scheduleFormatted: scheduleFormatted)));
               },
             ),
           ),

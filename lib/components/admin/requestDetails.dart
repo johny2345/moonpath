@@ -3,17 +3,22 @@ import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 
 class ClientRequestDetailPage extends StatefulWidget {
-  const ClientRequestDetailPage({Key? key, this.details}) : super(key: key);
+  const ClientRequestDetailPage(
+      {Key? key, this.details, this.scheduleFormatted})
+      : super(key: key);
   final details;
+  final scheduleFormatted;
 
   @override
-  _ClientRequestDetailPageState createState() =>
-      _ClientRequestDetailPageState(details: details);
+  _ClientRequestDetailPageState createState() => _ClientRequestDetailPageState(
+      details: details, scheduleFormatted: scheduleFormatted);
 }
 
 class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
-  _ClientRequestDetailPageState({Key? key, this.details});
+  _ClientRequestDetailPageState(
+      {Key? key, this.details, this.scheduleFormatted});
   final details;
+  final scheduleFormatted;
 
   String? channel,
       amount,
@@ -40,10 +45,11 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('again: $scheduleFormatted');
     setState(() {
       amount = details['amount'].toString();
       channel = details['channel'].toString();
-      contact = details['description'].toString();
+      contact = details['contact'].toString();
       description = details['description'].toString();
       email = details['email'].toString();
       imageUrl = details['imageUrl'].toString();
@@ -90,7 +96,8 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
               contact,
               amount,
               _instructions,
-              channel),
+              channel,
+              scheduleFormatted),
         ),
         // Align(
         //   alignment: Alignment.center,
@@ -104,25 +111,5 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
         // ),
       ],
     );
-  }
-
-  _displayClientDetails(BuildContext context) {
-    return SingleChildScrollView(
-        child: Card(
-      child: Container(
-        alignment: Alignment.center,
-        child: Column(
-          children: <Widget>[
-            Text(details['name'].toString()),
-            Text(details['channel'].toString()),
-            Text(details['description'].toString()),
-            Text(details['contact'].toString()),
-            // Text(details['imageUrl'].toString()),
-            Text(details['paymentStatus'].toString()),
-            Text(details['isAccepted'].toString()),
-          ],
-        ),
-      ),
-    ));
   }
 }
