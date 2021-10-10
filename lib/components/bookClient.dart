@@ -211,7 +211,6 @@ class _BookPageState extends State<BookPage> {
                   ),
                   TextFormField(
                     onSaved: (String? input) {
-                      name = input;
                       setState(() {
                         amount = input;
                       });
@@ -334,40 +333,48 @@ class _BookPageState extends State<BookPage> {
         DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     print('Selected date: $selectedDate');
     String? channel, _instructions = '';
-    name = "Wawangski Malakas";
-    _instructions =
-        'This is a sample description! hahahahah. The quick brown fox jumps over the lazy dog. why am I having a hard time using flutter. perhaps its because of the major change implemented by google developers to resolve the null issues that persist in most mobile applications for android and IOS. thanks you.';
-    selectedDate = DateTime.now();
-    email = 'testemail@yahoo.com';
-    amount = '40000';
-    paymentMethod = 'Gcash';
-    contactNumber = '09301325498';
-    description = 'birthday party me yowwww';
-    WidgetProperties().displayAnimatedDialog(
-        context,
-        name,
-        selectedDate,
-        description,
-        email,
-        contactNumber,
-        amount,
-        _instructions,
-        paymentMethod);
+    // name = "Wawangski Malakas";
+    // _instructions =
+    //     'This is a sample description! hahahahah. The quick brown fox jumps over the lazy dog. why am I having a hard time using flutter. perhaps its because of the major change implemented by google developers to resolve the null issues that persist in most mobile applications for android and IOS. thanks you.';
+    // selectedDate = DateTime.now();
+    // email = 'testemail@yahoo.com';
+    // amount = '40000';
+    // paymentMethod = 'Gcash';
+    // contactNumber = '09301325498';
+    // description = 'birthday party me yowwww';
+    // WidgetProperties().displayAnimatedDialog(
+    //     context,
+    //     name,
+    //     selectedDate,
+    //     description,
+    //     email,
+    //     contactNumber,
+    //     amount,
+    //     _instructions,
+    //     paymentMethod);
     if (paymentMethod == 'BPI') {
       setState(() {
         channel = 'BPIA';
+        _instructions =
+            "You will be redirected to the chosen bank's webpage. Login to your Online Banking Account,You will receive a One-Time PIN (OTP) to your registered mobile number. Authorize the payment";
       });
     } else if (paymentMethod == 'Union Bank') {
       setState(() {
         channel = 'UBPB';
+        _instructions =
+            "You will be redirected to the chosen bank's webpage. Login to your Online Banking Account,You will receive a One-Time PIN (OTP) to your registered mobile number. Authorize the payment";
       });
     } else if (paymentMethod == 'RCBC') {
       setState(() {
         channel = 'RCBC';
+        _instructions =
+            "You will be redirected to the chosen bank's webpage. Login to your Online Banking Account,You will receive a One-Time PIN (OTP) to your registered mobile number. Authorize the payment";
       });
     } else if (paymentMethod == 'Gcash') {
       setState(() {
         channel = 'gcash';
+        _instructions =
+            "You will be redirected to the chosen bank's webpage Login to your GCash Account,You will receive a One-Time PIN (OTP) to your registered mobile number. Authorize the payment";
       });
     } else if (paymentMethod == '7-eleven') {
       setState(() {
@@ -399,21 +406,31 @@ class _BookPageState extends State<BookPage> {
     if (formState!.validate()) {
       formState.save();
       try {
-        // Apis()
-        //     .buxBookRequest(
-        //         requestID,
-        //         amount,
-        //         selectedDate,
-        //         description,
-        //         channel,
-        //         email,
-        //         contactNumber,
-        //         name,
-        //         _instructions,
-        //         paymentMethod)
-        //     .then((value) {
-        //   String? paymentUrl = value.data['payment_url'];
-        // });
+        Apis()
+            .buxBookRequest(
+                requestID,
+                amount,
+                selectedDate,
+                description,
+                channel,
+                email,
+                contactNumber,
+                name,
+                _instructions,
+                paymentMethod)
+            .then((value) {
+          String? paymentUrl = value.data['payment_url'];
+          WidgetProperties().displayAnimatedDialog(
+              context,
+              name,
+              selectedDate,
+              description,
+              email,
+              contactNumber,
+              amount,
+              _instructions,
+              paymentMethod);
+        });
       } catch (e) {
         setState(() {
           isLoading = false;

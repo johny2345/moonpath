@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
@@ -22,34 +20,28 @@ class _CalendarScreenState extends State<CalendarScreen> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
+        String? desc = (doc['description']);
+        if (desc!.length >= 30) {
+          setState(() {
+            desc = desc!.substring(0, 25) + '...';
+          });
+        }
         print(doc["schedule"].toDate());
         print(doc["schedule"].toDate().year);
         setState(() {
-          // _events[doc['timestamp'].toDate()] = DateTime(doc["schedule"].toDate().year,
-          //       doc["schedule"].toDate().month, doc["schedule"].toDate().day): [
-          //     CleanCalendarEvent(doc["name"],
-          //         startTime: DateTime(DateTime.now().year, DateTime.now().month,
-          //             DateTime.now().day, 8, 0),
-          //         endTime: DateTime(DateTime.now().year, DateTime.now().month,
-          //             DateTime.now().day, 8, 0),
-          //         description: 'For Birthday celebration',
-          //         color: Colors.yellow),
-          //   ];
           _events.addAll({
             DateTime(doc["schedule"].toDate().year,
                 doc["schedule"].toDate().month, doc["schedule"].toDate().day): [
               CleanCalendarEvent(doc["name"],
                   startTime: DateTime(DateTime.now().year, DateTime.now().month,
-                      DateTime.now().day, 8, 0),
+                      DateTime.now().day, doc['schedule'].toDate().hour, 0),
                   endTime: DateTime(DateTime.now().year, DateTime.now().month,
-                      DateTime.now().day, 8, 0),
-                  description: 'For Birthday celebration',
+                      DateTime.now().day, 0, 0),
+                  description: desc.toString(),
+                  isAllDay: true,
                   color: Colors.yellow),
             ]
           });
-          print('this event------------------------------------------------>');
-          print(_events);
-          print('this event------------------------------------------------>');
         });
       });
     });
@@ -62,6 +54,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void initState() {
     super.initState();
     // Force selection of today on first load, so that the list of today's events gets shown.
+    _events = {};
     print('-get query func------------------------');
     _getQuery();
     print('-get query func------------------------');
@@ -92,40 +85,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return SafeArea(
       child: Calendar(
         startOnMonday: true,
-        weekDays: ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+        weekDays: ['Mo', 'Tu', 'Wed', 'Thu', 'Fr', 'Sa', 'Su'],
         events: _events,
         isExpandable: true,
+        isExpanded: true,
+        eventColor: Colors.teal,
         eventDoneColor: Colors.green,
         selectedColor: Colors.pink,
         todayColor: Colors.blue,
-        eventColor: Colors.grey,
         locale: 'en_US',
         todayButtonText: 'Today',
-        isExpanded: true,
         expandableDateFormat: 'EEEE, dd. MMMM yyyy',
         dayOfWeekStyle: TextStyle(
             color: Colors.black, fontWeight: FontWeight.w800, fontSize: 11),
       ),
-    );
-  }
-}
-
-List<ParseJson> parsePhotos(String responseBody) {
-  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<ParseJson>((json) => ParseJson.fromJson(json)).toList();
-}
-
-class ParseJson {
-  final String? name;
-  final DateTime? schedule;
-
-  const ParseJson({this.name, this.schedule});
-
-  factory ParseJson.fromJson(Map<String, dynamic> json) {
-    return ParseJson(
-      name: json['name'] as String,
-      schedule: json['schedule'].toDate() as DateTime,
     );
   }
 }

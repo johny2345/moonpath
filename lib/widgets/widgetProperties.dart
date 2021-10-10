@@ -36,6 +36,41 @@ class WidgetProperties {
 
   contentBox(BuildContext context, name, selectedDate, description, email,
       contactNumber, amount, _instructions, paymentMethod) {
+    String? month;
+    DateTime? requestDate = selectedDate;
+
+    if (requestDate!.month == 1) {
+      month = 'January';
+    } else if (requestDate.month == 2) {
+      month = 'February';
+    } else if (requestDate.month == 3) {
+      month = 'March';
+    } else if (requestDate.month == 4) {
+      month = 'April';
+    } else if (requestDate.month == 5) {
+      month = 'May';
+    } else if (requestDate.month == 6) {
+      month = 'June';
+    } else if (requestDate.month == 7) {
+      month = 'July';
+    } else if (requestDate.month == 8) {
+      month = 'August';
+    } else if (requestDate.month == 9) {
+      month = 'September';
+    } else if (requestDate.month == 10) {
+      month = 'October';
+    } else if (requestDate.month == 11) {
+      month = 'November';
+    } else if (requestDate.month == 12) {
+      month = 'December';
+    }
+
+    String? scheduleFormatted = month.toString() +
+        ' ' +
+        requestDate.day.toString() +
+        ',' +
+        ' ' +
+        requestDate.year.toString();
     return Stack(
       children: <Widget>[
         Container(
@@ -81,7 +116,26 @@ class WidgetProperties {
               SizedBox(
                 height: 15,
               ),
-              Text(description),
+              Container(
+                color: Colors.grey[200],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(description),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      scheduleFormatted.toString(),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
               Text(selectedDate.toString(),
                   style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic)),
               SizedBox(

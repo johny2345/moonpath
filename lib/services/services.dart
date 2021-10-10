@@ -70,7 +70,7 @@ class Apis {
           response.data['ref_code'],
           response.data['image_url'],
           response.data['payment_url'],
-          response.data['status'],
+          'Pending',
           paymentMethod);
       print(response);
       return response;
