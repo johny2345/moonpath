@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:readmore/readmore.dart';
 import 'package:moonpath/widgets/calendar.dart';
 import 'package:moonpath/widgets/image_carousel.dart';
+import 'package:moonpath/widgets/sync_calendar.dart';
 import 'package:moonpath/widgets/video_background.dart';
 import 'package:moonpath/components/faq.dart';
 import 'package:moonpath/components/login.dart';
@@ -160,11 +161,11 @@ class _HomepageState extends State<Homepage> {
               ),
               ListTile(
                 leading: Icon(Icons.calendar_today),
-                title: const Text('Schedules'),
+                title: const Text('Calendar'),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CalendarScreen()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => CalendarApp()));
                 },
               ),
               Divider(

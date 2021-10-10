@@ -149,7 +149,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
               ),
               ListTile(
                 leading: Icon(Icons.calendar_today),
-                title: const Text('Schedules'),
+                title: const Text('Calendar'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(
