@@ -315,6 +315,9 @@ class _BookPageState extends State<BookPage> {
                     clipBehavior: Clip.hardEdge,
                     onPressed: () {
                       // Apis().getDetails();
+                      setState(() {
+                        isLoading = true;
+                      });
                       bookCustomer();
                     },
                     child: Text('BOOK NOW'),

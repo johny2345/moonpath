@@ -39,6 +39,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       paymentUrl,
       refCode,
       requestId,
+      firebaseRequestId,
       _instructions;
   DateTime? schedule, timestamp;
   bool? isAccepted;
@@ -70,6 +71,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       timestamp = details['timestamp'].toDate();
       isAccepted = details['isAccepted'];
       _instructions = '';
+      firebaseRequestId = details.id;
     });
 
     if (paymentStatus == "Paid") {
@@ -113,7 +115,8 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
               channel,
               paymentStatusBool,
               scheduleFormatted,
-              paymentUrl),
+              paymentUrl,
+              firebaseRequestId),
         ),
         // Align(
         //   alignment: Alignment.center,

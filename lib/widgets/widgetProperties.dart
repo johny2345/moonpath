@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:moonpath/api/apiProvider.dart';
 import 'package:moonpath/components/homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -198,7 +199,8 @@ class WidgetProperties {
       paymentMethod,
       paymentStatus,
       scheduleFormatted,
-      paymentUrl) {
+      paymentUrl,
+      firebaseRequestId) {
     return Stack(
       children: <Widget>[
         Container(
@@ -325,9 +327,8 @@ class WidgetProperties {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                     onPressed: () {
+                      ApiProvider().updateAcceptRequest(firebaseRequestId);
                       displaySnackBar(context, 'Request accepted!');
-                      // _launchInWebViewOrVC(
-                      //     'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534');
                     },
                     child: Text(
                       'Accept',
