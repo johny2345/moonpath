@@ -72,7 +72,9 @@ class Apis {
           response.data['payment_url'],
           'Pending',
           paymentMethod);
+      print('-----------------THIS IS THE RESPONSE GENERATED----------------');
       print(response);
+      print('-----------------THIS IS THE RESPONSE GENERATED----------------');
       return response;
     } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout) {

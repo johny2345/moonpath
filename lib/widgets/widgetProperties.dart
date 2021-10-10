@@ -35,7 +35,7 @@ class WidgetProperties {
   }
 
   contentBox(BuildContext context, name, selectedDate, description, email,
-      contactNumber, amount, _instructions, paymentMethod) {
+      contactNumber, amount, _instructions, paymentMethod, paymentUrl) {
     String? month;
     DateTime? requestDate = selectedDate;
 
@@ -136,8 +136,6 @@ class WidgetProperties {
                   ],
                 ),
               ),
-              Text(selectedDate.toString(),
-                  style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic)),
               SizedBox(
                 height: 15,
               ),
@@ -154,8 +152,7 @@ class WidgetProperties {
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      // _launchInWebViewOrVC(
-                      //     'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534');
+                      _launchInWebViewOrVC(paymentUrl);
                     },
                     child: Text(
                       'Proceed payment',
@@ -357,7 +354,7 @@ class WidgetProperties {
   }
 
   displayAnimatedDialog(BuildContext context, name, selectedDate, description,
-      email, contactNumber, amount, _instructions, paymentMethod) {
+      email, contactNumber, amount, _instructions, paymentMethod, paymentUrl) {
     return showAnimatedDialog(
       context: context,
       barrierDismissible: false,
@@ -378,8 +375,17 @@ class WidgetProperties {
               ),
               elevation: 0,
               backgroundColor: Colors.transparent,
-              child: contentBox(context, name, selectedDate, description, email,
-                  contactNumber, amount, _instructions, paymentMethod),
+              child: contentBox(
+                  context,
+                  name,
+                  selectedDate,
+                  description,
+                  email,
+                  contactNumber,
+                  amount,
+                  _instructions,
+                  paymentMethod,
+                  paymentUrl),
             ),
             Align(
               alignment: Alignment.center,

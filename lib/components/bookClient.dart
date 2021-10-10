@@ -419,7 +419,9 @@ class _BookPageState extends State<BookPage> {
                 _instructions,
                 paymentMethod)
             .then((value) {
+          print('------PAYMENT URL DUY-----------');
           String? paymentUrl = value.data['payment_url'];
+          print('------$paymentUrl-----------');
           WidgetProperties().displayAnimatedDialog(
               context,
               name,
@@ -429,7 +431,8 @@ class _BookPageState extends State<BookPage> {
               contactNumber,
               amount,
               _instructions,
-              paymentMethod);
+              paymentMethod,
+              paymentUrl);
         });
       } catch (e) {
         setState(() {
