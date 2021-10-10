@@ -17,7 +17,7 @@ Map<DateTime, List<CleanCalendarEvent>> _events = {};
 
 class _CalendarScreenState extends State<CalendarScreen> {
   _getQuery() async {
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('bookRequests')
         .get()
         .then((QuerySnapshot querySnapshot) {
@@ -25,7 +25,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
         print(doc["schedule"].toDate());
         print(doc["schedule"].toDate().year);
         setState(() {
-          _events = {
+          // _events[doc['timestamp'].toDate()] = DateTime(doc["schedule"].toDate().year,
+          //       doc["schedule"].toDate().month, doc["schedule"].toDate().day): [
+          //     CleanCalendarEvent(doc["name"],
+          //         startTime: DateTime(DateTime.now().year, DateTime.now().month,
+          //             DateTime.now().day, 8, 0),
+          //         endTime: DateTime(DateTime.now().year, DateTime.now().month,
+          //             DateTime.now().day, 8, 0),
+          //         description: 'For Birthday celebration',
+          //         color: Colors.yellow),
+          //   ];
+          _events.addAll({
             DateTime(doc["schedule"].toDate().year,
                 doc["schedule"].toDate().month, doc["schedule"].toDate().day): [
               CleanCalendarEvent(doc["name"],
@@ -35,8 +45,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       DateTime.now().day, 8, 0),
                   description: 'For Birthday celebration',
                   color: Colors.yellow),
-            ],
-          };
+            ]
+          });
+          print('this event------------------------------------------------>');
+          print(_events);
+          print('this event------------------------------------------------>');
         });
       });
     });
@@ -45,13 +58,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
   DateTime? getSchedule;
   String? name;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Force selection of today on first load, so that the list of today's events gets shown.
-  //   _handleNewDate(DateTime(
-  //       DateTime.now().year, DateTime.now().month, DateTime.now().day));
-  // }
+  @override
+  void initState() {
+    super.initState();
+    // Force selection of today on first load, so that the list of today's events gets shown.
+    print('-get query func------------------------');
+    _getQuery();
+    print('-get query func------------------------');
+    _handleNewDate(DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +89,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   _displayCalendar(BuildContext context) {
-    print('-get query func------------------------');
-    _getQuery();
-    print('-get query func------------------------');
-
     return SafeArea(
       child: Calendar(
         startOnMonday: true,
