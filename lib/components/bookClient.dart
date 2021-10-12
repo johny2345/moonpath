@@ -3,7 +3,6 @@ import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:moonpath/services/services.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:moonpath/widgets/widgetProperties.dart';
 
 class BookPage extends StatefulWidget {
   const BookPage({Key? key}) : super(key: key);
@@ -135,8 +134,10 @@ class _BookPageState extends State<BookPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
+      print('should display loading screen=================');
       return WidgetProperties().loadingProgress(context);
     } else {
+      print('should not display loading: $isLoading screen2=================');
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -388,8 +389,8 @@ class _BookPageState extends State<BookPage> {
     }
     var timeFormat = _time.format(context);
     DateTime today = DateTime.now();
-    print(today.year);
-    print(today.month);
+    // print(today.year);
+    // print(today.month);
     String? requestID = 'req_' +
         today.year.toString() +
         today.month.toString() +
@@ -397,46 +398,52 @@ class _BookPageState extends State<BookPage> {
         today.hour.toString() +
         today.second.toString() +
         today.millisecond.toString();
-    print(requestID);
+    // print(requestID);
 
-    print('---------------------------$today---------------');
-    print('get data: $_date $_timeController $_time');
-    print('----------------->$timeFormat $paymentMethod');
-    setState(() {
-      isLoading = true;
-    });
+    // print('---------------------------$today---------------');
+    // print('get data: $_date $_timeController $_time');
+    // print('----------------->$timeFormat $paymentMethod');
     final formState = _formKey.currentState;
     if (formState!.validate()) {
       formState.save();
       try {
-        Apis()
-            .buxBookRequest(
-                requestID,
-                amount,
+        if (paymentMethod != '') {
+          Apis()
+              .buxBookRequest(
+                  requestID,
+                  amount,
+                  selectedDate,
+                  description,
+                  channel,
+                  email,
+                  contactNumber,
+                  name,
+                  _instructions,
+                  paymentMethod)
+              .then((value) {
+            print('------PAYMENT URL DUY-----------');
+            String? paymentUrl = value.data['payment_url'];
+            print('------$paymentUrl-----------');
+            setState(() {
+              isLoading = false;
+            });
+            WidgetProperties().displayAnimatedDialog(
+                context,
+                name,
                 selectedDate,
                 description,
-                channel,
                 email,
                 contactNumber,
-                name,
+                amount,
                 _instructions,
-                paymentMethod)
-            .then((value) {
-          print('------PAYMENT URL DUY-----------');
-          String? paymentUrl = value.data['payment_url'];
-          print('------$paymentUrl-----------');
-          WidgetProperties().displayAnimatedDialog(
-              context,
-              name,
-              selectedDate,
-              description,
-              email,
-              contactNumber,
-              amount,
-              _instructions,
-              paymentMethod,
-              paymentUrl);
-        });
+                paymentMethod,
+                paymentUrl);
+          });
+        } else {
+          print('should display dialog!================+++++');
+          WidgetProperties().invalidDialog(
+              context, 'INPUT FIELDS', 'Please choose your payment method');
+        }
       } catch (e) {
         setState(() {
           isLoading = false;
@@ -444,15 +451,13 @@ class _BookPageState extends State<BookPage> {
         WidgetProperties()
             .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
       }
-      setState(() {
-        isLoading = false;
-      });
+      // setState(() {
+      //   isLoading = false;
+      // });
     } else {
       setState(() {
         isLoading = false;
       });
-      // WidgetProperties()
-      //     .invalidDialog(context, 'INPUT FIELDS', 'Butangi pud chui');
     }
   }
 }
