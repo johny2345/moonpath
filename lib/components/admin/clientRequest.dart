@@ -51,9 +51,14 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
 
     return ListView(
       children: snapshot.data!.docs.map<Widget>((document) {
-        DateTime? requestDate = document['schedule'].toDate();
-        print('requestDAte: ' + requestDate!.month.toString());
-        if (requestDate!.month == 1) {
+        DateTime? requestDate = document['schedule'].toDate().toUtc();
+        var dateScheds = DateTime.utc(requestDate!.year, requestDate.month,
+                requestDate.day, requestDate.hour)
+            .add(Duration(hours: 8));
+        print('-------------------------------------------------');
+        print('dateScheds: ' + dateScheds.toString());
+        print('requestDAte: ' + requestDate.toString());
+        if (requestDate.month == 1) {
           month = 'January';
         }
         if (requestDate.month == 2) {
