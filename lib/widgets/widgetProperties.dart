@@ -259,7 +259,7 @@ class WidgetProperties {
                     )
                   : RichText(
                       text: TextSpan(
-                        text: 'Payment Statuss: ',
+                        text: 'Payment Status: ',
                         style: TextStyle(color: Colors.black),
                         children: <TextSpan>[
                           TextSpan(

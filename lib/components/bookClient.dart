@@ -407,7 +407,9 @@ class _BookPageState extends State<BookPage> {
     if (formState!.validate()) {
       formState.save();
       try {
-        if (paymentMethod != '') {
+        print('------PAYMENT paymentMethod-----------');
+        print(paymentMethod);
+        if (paymentMethod != '' || paymentMethod != null) {
           Apis()
               .buxBookRequest(
                   requestID,
