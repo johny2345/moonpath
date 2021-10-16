@@ -409,7 +409,7 @@ class _BookPageState extends State<BookPage> {
       try {
         print('------PAYMENT paymentMethod-----------');
         print(paymentMethod);
-        if (paymentMethod != '' || paymentMethod != null) {
+        if (paymentMethod != '' && paymentMethod != null) {
           Apis()
               .buxBookRequest(
                   requestID,
@@ -443,8 +443,14 @@ class _BookPageState extends State<BookPage> {
           });
         } else {
           print('should display dialog!================+++++');
-          WidgetProperties().invalidDialog(
-              context, 'INPUT FIELDS', 'Please choose your payment method');
+          WidgetProperties()
+              .invalidDialog(
+                  context, 'INPUT FIELDS', 'Please choose your payment method')
+              .then((value) {
+            setState(() {
+              isLoading = false;
+            });
+          });
         }
       } catch (e) {
         setState(() {

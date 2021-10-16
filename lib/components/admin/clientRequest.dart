@@ -52,34 +52,53 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
     return ListView(
       children: snapshot.data!.docs.map<Widget>((document) {
         DateTime? requestDate = document['schedule'].toDate();
+        print('requestDAte: ' + requestDate!.month.toString());
         if (requestDate!.month == 1) {
           month = 'January';
-        } else if (requestDate.month == 2) {
+        }
+        if (requestDate.month == 2) {
           month = 'February';
-        } else if (requestDate.month == 3) {
+        }
+        if (requestDate.month == 3) {
           month = 'March';
-        } else if (requestDate.month == 4) {
+        }
+        if (requestDate.month == 4) {
           month = 'April';
-        } else if (requestDate.month == 5) {
+        }
+        if (requestDate.month == 5) {
           month = 'May';
-        } else if (requestDate.month == 6) {
+        }
+        if (requestDate.month == 6) {
           month = 'June';
-        } else if (requestDate.month == 7) {
+        }
+        if (requestDate.month == 7) {
           month = 'July';
-        } else if (requestDate.month == 8) {
+        }
+        if (requestDate.month == 8) {
           month = 'August';
-        } else if (requestDate.month == 9) {
+        }
+        if (requestDate.month == 9) {
           month = 'September';
-        } else if (requestDate.month == 10) {
+        }
+        if (requestDate.month == 10) {
           month = 'October';
-        } else if (requestDate.month == 11) {
+        }
+        if (requestDate.month == 11) {
           month = 'November';
-        } else if (requestDate.month == 12) {
+        }
+        if (requestDate.month == 12) {
           month = 'December';
         }
 
         Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-        print(data);
+        // print(data);
+        String? displayCal = month.toString() +
+            ' ' +
+            requestDate.day.toString() +
+            ',' +
+            ' ' +
+            requestDate.year.toString();
+        debugPrint(data['name'] + ' ' + data['schedule'].toDate().toString());
         return Padding(
           padding: const EdgeInsets.all(2.0),
           child: Container(
@@ -89,23 +108,13 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
             child: ListTile(
               leading: Icon(Icons.request_page_rounded),
               title: Text(data['name'].toString()),
-              subtitle: Text(month.toString() +
-                  ' ' +
-                  requestDate.day.toString() +
-                  ',' +
-                  ' ' +
-                  requestDate.year.toString()),
+              subtitle: Text(displayCal),
               onTap: () {
                 setState(() {
-                  scheduleFormatted = month.toString() +
-                      ' ' +
-                      requestDate.day.toString() +
-                      ',' +
-                      ' ' +
-                      requestDate.year.toString();
+                  scheduleFormatted = displayCal;
                 });
                 debugPrint(scheduleFormatted);
-                debugPrint(data['timestamp'].toString());
+                debugPrint(data['name'] + ' ' + data['timestamp'].toString());
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ClientRequestDetailPage(
                         details: data, scheduleFormatted: scheduleFormatted)));

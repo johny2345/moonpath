@@ -71,7 +71,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       timestamp = details['timestamp'].toDate();
       isAccepted = details['isAccepted'];
       _instructions = '';
-      firebaseRequestId = details.id;
+      // firebaseRequestId = details.id;
     });
 
     if (paymentStatus == "Paid") {

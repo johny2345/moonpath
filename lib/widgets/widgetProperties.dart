@@ -282,7 +282,7 @@ class WidgetProperties {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(description),
+                    Text(description, textAlign: TextAlign.center),
                     SizedBox(
                       height: 10,
                     ),
