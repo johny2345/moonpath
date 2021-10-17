@@ -89,7 +89,6 @@ class Apis {
   }
 
   Future<dynamic> getDetails(reqId) async {
-    // String? reqId = 'req_2021102163190'
     print(
         'getDetails functions being called!----$reqId-------------------------');
     String? url =

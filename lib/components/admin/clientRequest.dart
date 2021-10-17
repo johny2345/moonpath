@@ -56,8 +56,8 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                 requestDate.day, requestDate.hour)
             .add(Duration(hours: 8));
         print('-------------------------------------------------');
-        // print('dateScheds: ' + dateScheds.toString());
-        // print('requestDAte: ' + requestDate.toString());
+        print('dateScheds: ' + dateScheds.toString());
+        print('requestDAte: ' + requestDate.toString());
         if (requestDate.month == 1) {
           month = 'January';
         }

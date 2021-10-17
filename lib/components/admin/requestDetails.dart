@@ -22,6 +22,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       {Key? key, this.details, this.scheduleFormatted, this.documentId});
 
   bool? paymentStatusBool = false;
+  bool? isLoading = true;
 
   @override
   initState() {
@@ -29,6 +30,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
     Apis().getDetails(details['requestId'].toString()).then((value) {
       setState(() {
         paymentStatus = value.data['status'];
+        isLoading = false;
       });
     });
   }
@@ -79,7 +81,6 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       timestamp = details['timestamp'].toDate();
       isAccepted = details['isAccepted'];
       _instructions = '';
-      // firebaseRequestId = details.id;
     });
 
     if (paymentStatus == "Paid") {
@@ -88,14 +89,18 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       });
     }
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Request Details'),
+    if (isLoading == true) {
+      return WidgetProperties().loadingProgress(context);
+    } else {
+      return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Request Details'),
+          ),
+          body: displayAnimatedDialog(context),
         ),
-        body: displayAnimatedDialog(context),
-      ),
-    );
+      );
+    }
   }
 
   displayAnimatedDialog(BuildContext context) {

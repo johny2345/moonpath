@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 
@@ -13,6 +14,8 @@ class CalendarScreen extends StatefulWidget {
 Map<DateTime, List<CleanCalendarEvent>> _events = {};
 
 class _CalendarScreenState extends State<CalendarScreen> {
+  bool? isLoading = true;
+
   _getQuery() async {
     await FirebaseFirestore.instance
         .collection('bookRequests')
@@ -43,6 +46,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
         });
       });
     });
+    setState(() {
+      isLoading = false;
+    });
   }
 
   DateTime? getSchedule;
@@ -62,13 +68,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Calendar'),
-      ),
-      body: _buildRequestList(context),
-    );
+    if (isLoading == true) {
+      return WidgetProperties().loadingProgress(context);
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Calendar'),
+        ),
+        body: _buildRequestList(context),
+      );
+    }
   }
 
   _buildRequestList(BuildContext context) {
