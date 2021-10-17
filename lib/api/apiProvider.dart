@@ -56,7 +56,7 @@ class ApiProvider {
     return await FirebaseAuth.instance.signOut();
   }
 
-  Future<void> updateAcceptRequest(requestId) {
-    return bookRequest.doc(requestId).update({'isAccepted': true});
+  Future<void> updateAcceptRequest(documentId) {
+    return bookRequest.doc(documentId).update({'isAccepted': true});
   }
 }

@@ -4,19 +4,22 @@ import 'package:moonpath/services/services.dart';
 
 class ClientRequestDetailPage extends StatefulWidget {
   const ClientRequestDetailPage(
-      {Key? key, this.details, this.scheduleFormatted})
+      {Key? key, this.details, this.scheduleFormatted, this.documentId})
       : super(key: key);
   final details;
+  final documentId;
   final scheduleFormatted;
 
   @override
   _ClientRequestDetailPageState createState() => _ClientRequestDetailPageState(
-      details: details, scheduleFormatted: scheduleFormatted);
+      details: details,
+      scheduleFormatted: scheduleFormatted,
+      documentId: documentId);
 }
 
 class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
   _ClientRequestDetailPageState(
-      {Key? key, this.details, this.scheduleFormatted});
+      {Key? key, this.details, this.scheduleFormatted, this.documentId});
 
   @override
   initState() {
@@ -26,6 +29,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
 
   final details;
   final scheduleFormatted;
+  final documentId;
   bool? paymentStatusBool = false;
 
   String? channel,
@@ -116,7 +120,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
               paymentStatusBool,
               scheduleFormatted,
               paymentUrl,
-              firebaseRequestId),
+              documentId),
         ),
         // Align(
         //   alignment: Alignment.center,

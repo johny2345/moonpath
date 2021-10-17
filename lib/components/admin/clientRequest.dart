@@ -56,8 +56,8 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                 requestDate.day, requestDate.hour)
             .add(Duration(hours: 8));
         print('-------------------------------------------------');
-        print('dateScheds: ' + dateScheds.toString());
-        print('requestDAte: ' + requestDate.toString());
+        // print('dateScheds: ' + dateScheds.toString());
+        // print('requestDAte: ' + requestDate.toString());
         if (requestDate.month == 1) {
           month = 'January';
         }
@@ -104,6 +104,9 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
             ' ' +
             requestDate.year.toString();
         debugPrint(data['name'] + ' ' + data['schedule'].toDate().toString());
+        print('---------------GET DOCUMENT ID---------------------');
+        print(document.id);
+        String? documentId = document.id;
         return Padding(
           padding: const EdgeInsets.all(2.0),
           child: Container(
@@ -122,7 +125,9 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                 debugPrint(data['name'] + ' ' + data['timestamp'].toString());
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ClientRequestDetailPage(
-                        details: data, scheduleFormatted: scheduleFormatted)));
+                        details: data,
+                        scheduleFormatted: scheduleFormatted,
+                        documentId: documentId)));
               },
             ),
           ),

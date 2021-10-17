@@ -203,7 +203,7 @@ class WidgetProperties {
       paymentStatus,
       scheduleFormatted,
       paymentUrl,
-      firebaseRequestId) {
+      documentId) {
     return Stack(
       children: <Widget>[
         Container(
@@ -330,8 +330,11 @@ class WidgetProperties {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                     onPressed: () {
-                      ApiProvider().updateAcceptRequest(firebaseRequestId);
-                      displaySnackBar(context, 'Request accepted!');
+                      ApiProvider()
+                          .updateAcceptRequest(documentId)
+                          .then((value) {
+                        displaySnackBar(context, 'Request accepted!');
+                      });
                     },
                     child: Text(
                       'Accept',
