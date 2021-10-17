@@ -101,25 +101,20 @@ class _AdminHomePageState extends State<AdminHomePage> {
               DrawerHeader(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/yacht/images/1.jpg'),
+                      image: AssetImage('assets/yacht/images/sailing_boat.jpg'),
                       fit: BoxFit.fill),
                 ),
                 child: Container(
-                  alignment: Alignment.center,
-                  // child: Text(
-                  //   "Menu Bar",
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //       fontStyle: FontStyle.normal,
-                  //       fontWeight: FontWeight.bold,
-                  //       fontSize: 20,
-                  //       color: Colors.amber),
-                  // ),
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    "Moonpath travel and tours",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        color: Colors.white),
+                  ),
                 ),
-              ),
-              Divider(
-                height: 2,
-                color: Colors.grey,
               ),
               ListTile(
                 leading: Icon(Icons.request_page),

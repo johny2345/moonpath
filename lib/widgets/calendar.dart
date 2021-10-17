@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 
@@ -27,7 +26,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
           });
         }
         print(doc["schedule"].toDate());
-        print(doc["schedule"].toDate().year);
         setState(() {
           _events.addAll({
             DateTime(doc["schedule"].toDate().year,
@@ -39,7 +37,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       DateTime.now().day, 0, 0),
                   description: desc.toString(),
                   isAllDay: true,
-                  color: Colors.yellow),
+                  color: Colors.indigo),
             ]
           });
         });
@@ -84,7 +82,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   _displayCalendar(BuildContext context) {
     return SafeArea(
       child: Calendar(
-        startOnMonday: true,
+        startOnMonday: false,
         weekDays: ['Mo', 'Tu', 'Wed', 'Thu', 'Fr', 'Sa', 'Su'],
         events: _events,
         isExpandable: true,
