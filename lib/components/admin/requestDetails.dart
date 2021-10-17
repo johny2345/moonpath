@@ -21,16 +21,21 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
   _ClientRequestDetailPageState(
       {Key? key, this.details, this.scheduleFormatted, this.documentId});
 
+  bool? paymentStatusBool = false;
+
   @override
   initState() {
     super.initState();
-    Apis().getDetails(details['requestId'].toString());
+    Apis().getDetails(details['requestId'].toString()).then((value) {
+      setState(() {
+        paymentStatus = value.data['status'];
+      });
+    });
   }
 
   final details;
   final scheduleFormatted;
   final documentId;
-  bool? paymentStatusBool = false;
 
   String? channel,
       amount,
@@ -67,7 +72,6 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
       email = details['email'].toString();
       imageUrl = details['imageUrl'].toString();
       name = details['name'].toString();
-      paymentStatus = details['paymentStatus'].toString();
       paymentUrl = details['paymentUrl'].toString();
       refCode = details['refCode'];
       requestId = details['requestId'].toString();
