@@ -37,7 +37,7 @@ class Apis {
             receiveTimeout: 3000,
             followRedirects: false,
             validateStatus: (status) {
-              return status! < 500;
+              return status! <= 500;
             },
             headers: {"Content-Type": "application/json", 'x-api-key': apiKey}),
         data: {

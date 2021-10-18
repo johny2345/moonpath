@@ -1,9 +1,10 @@
+import 'package:moonpath/api/apiProvider.dart';
+import 'package:moonpath/components/homePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:moonpath/api/apiProvider.dart';
-import 'package:moonpath/components/homePage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WidgetProperties {
@@ -24,16 +25,21 @@ class WidgetProperties {
     ),
     primary: Colors.red,
   );
+
   loadingProgress(BuildContext context) {
-    return Material(
-      child: Container(
-        alignment: Alignment.center,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-    );
+    return SpinKitFoldingCube(color: Colors.teal[100], size: 50.00);
   }
+
+  // loadingProgress(BuildContext context) {
+  //   return Material(
+  //     child: Container(
+  //       alignment: Alignment.center,
+  //       child: Center(
+  //         child: CircularProgressIndicator(),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   contentBox(BuildContext context, name, selectedDate, description, email,
       contactNumber, amount, _instructions, paymentMethod, paymentUrl) {

@@ -108,13 +108,13 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
         print(document.id);
         String? documentId = document.id;
         return Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: const EdgeInsets.only(bottom: 2.0),
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(3.0)),
             child: ListTile(
-              leading: Icon(Icons.request_page_rounded),
+              leading: Icon(Icons.person),
               title: Text(data['name'].toString()),
               subtitle: Text(displayCal),
               onTap: () {
