@@ -27,7 +27,14 @@ class WidgetProperties {
   );
 
   loadingProgress(BuildContext context) {
-    return SpinKitFoldingCube(color: Colors.teal[100], size: 50.00);
+    return Material(
+      child: Container(
+          alignment: Alignment.center,
+          child: SpinKitFoldingCube(
+            color: Colors.teal[300],
+            size: 50.00,
+          )),
+    );
   }
 
   // loadingProgress(BuildContext context) {
