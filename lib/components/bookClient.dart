@@ -57,39 +57,37 @@ class _BookPageState extends State<BookPage> {
 
   _buildScheduleDate() {
     return Expanded(
-        flex: 2,
-        child: Padding(
-          padding: EdgeInsets.only(right: 10.0),
-          child: DateTimePicker(
-            type: DateTimePickerType.date,
-            //dateMask: 'yyyy/MM/dd',
-            controller: _dateController,
-            //initialValue: _initialValue,
-            firstDate: DateTime(2020),
-            lastDate: DateTime(2100),
-            icon: Icon(Icons.event),
-            dateLabelText: 'Date',
-            // locale: Locale('pt', 'BR'),
-            selectableDayPredicate: (date) {
-              if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-                return false;
-              } else {
-                return true;
-              }
-            },
-            onChanged: (val) => setState(() {
-              _date = DateTime.parse(val);
-            }),
-            validator: (input) {
-              if (input == null || input == '') {
-                return 'Please choose date';
-              }
-            },
-            // onSaved: (val) => setState(() {
-            //   _date = DateTime.parse(val);
-            // }),
-          ),
-        ));
+      flex: 1,
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: DateTimePicker(
+          type: DateTimePickerType.date,
+          //dateMask: 'yyyy/MM/dd',
+          controller: _dateController,
+          //initialValue: _initialValue,
+          firstDate: DateTime(2020),
+          lastDate: DateTime(2100),
+          icon: Icon(Icons.event),
+          dateLabelText: 'Date',
+          // locale: Locale('pt', 'BR'),
+          selectableDayPredicate: (date) {
+            if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+              return false;
+            } else {
+              return true;
+            }
+          },
+          onChanged: (val) => setState(() {
+            _date = DateTime.parse(val);
+          }),
+          validator: (input) {
+            if (input == null || input == '') {
+              return 'Please choose date';
+            }
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -105,7 +103,9 @@ class _BookPageState extends State<BookPage> {
           title: Text('Book now'),
           centerTitle: true,
         ),
-        body: _userInputDetailsForm(context),
+        body: SingleChildScrollView(
+          child: _userInputDetailsForm(context),
+        ),
       );
     }
   }
@@ -194,7 +194,36 @@ class _BookPageState extends State<BookPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  _buildScheduleDate(),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: DateTimePicker(
+                      type: DateTimePickerType.date,
+                      //dateMask: 'yyyy/MM/dd',
+                      controller: _dateController,
+                      //initialValue: _initialValue,
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2100),
+                      icon: Icon(Icons.event),
+                      dateLabelText: 'Date',
+                      // locale: Locale('pt', 'BR'),
+                      selectableDayPredicate: (date) {
+                        if (date.isBefore(
+                            DateTime.now().subtract(Duration(days: 1)))) {
+                          return false;
+                        } else {
+                          return true;
+                        }
+                      },
+                      onChanged: (val) => setState(() {
+                        _date = DateTime.parse(val);
+                      }),
+                      validator: (input) {
+                        if (input == null || input == '') {
+                          return 'Please choose date';
+                        }
+                      },
+                    ),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
