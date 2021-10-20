@@ -56,79 +56,40 @@ class _BookPageState extends State<BookPage> {
   }
 
   _buildScheduleDate() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Expanded(
-            flex: 2,
-            child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: DateTimePicker(
-                type: DateTimePickerType.date,
-                //dateMask: 'yyyy/MM/dd',
-                controller: _dateController,
-                //initialValue: _initialValue,
-                firstDate: DateTime(2020),
-                lastDate: DateTime(2100),
-                icon: Icon(Icons.event),
-                dateLabelText: 'Date',
-                // locale: Locale('pt', 'BR'),
-                selectableDayPredicate: (date) {
-                  if (date
-                      .isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-                    return false;
-                  } else {
-                    return true;
-                  }
-                },
-                onChanged: (val) => setState(() {
-                  _date = DateTime.parse(val);
-                }),
-                validator: (input) {
-                  if (input == null || input == '') {
-                    return 'Please choose date';
-                  }
-                },
-                // onSaved: (val) => setState(() {
-                //   _date = DateTime.parse(val);
-                // }),
-              ),
-            )),
-        Expanded(
-          child: TextFormField(
-            readOnly: true,
-            onTap: () {
-              Navigator.of(context).push(
-                showPicker(
-                  context: context,
-                  value: _time,
-                  onChange: onTimeChanged,
-                ),
-              );
+    return Expanded(
+        flex: 2,
+        child: Padding(
+          padding: EdgeInsets.only(right: 10.0),
+          child: DateTimePicker(
+            type: DateTimePickerType.date,
+            //dateMask: 'yyyy/MM/dd',
+            controller: _dateController,
+            //initialValue: _initialValue,
+            firstDate: DateTime(2020),
+            lastDate: DateTime(2100),
+            icon: Icon(Icons.event),
+            dateLabelText: 'Date',
+            // locale: Locale('pt', 'BR'),
+            selectableDayPredicate: (date) {
+              if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+                return false;
+              } else {
+                return true;
+              }
             },
-            controller: _timeController,
-            decoration: InputDecoration(
-              labelText: 'Time',
-              // icon: IconButton(
-              //     padding: EdgeInsets.all(0.0),
-              //     color: Colors.deepPurpleAccent[300],
-              //     highlightColor: Colors.teal,
-              // onPressed: () {
-              //   Navigator.of(context).push(
-              //     showPicker(
-              //       context: context,
-              //       value: _time,
-              //       onChange: onTimeChanged,
-              //     ),
-              //   );
-              // },
-              //     icon: Icon(Icons.access_time_outlined)),
-            ),
+            onChanged: (val) => setState(() {
+              _date = DateTime.parse(val);
+            }),
+            validator: (input) {
+              if (input == null || input == '') {
+                return 'Please choose date';
+              }
+            },
+            // onSaved: (val) => setState(() {
+            //   _date = DateTime.parse(val);
+            // }),
           ),
-        )
-      ],
-    );
+        ));
   }
 
   @override
