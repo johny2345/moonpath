@@ -48,8 +48,18 @@ class ApiProvider {
     });
   }
 
-  Future<dynamic> getSchedules() async {
-    return bookRequest.orderBy('schedule').snapshots();
+  Future<dynamic> _getQuery() async {
+    var listOfSchedules =
+        await FirebaseFirestore.instance.collection('bookRequests').snapshots();
+
+    return listOfSchedules;
+  }
+
+  getSchedules() async {
+    var listOfRequest = await bookRequest.get();
+
+    print(listOfRequest);
+    return listOfRequest;
   }
 
   Future<void> logout() async {
