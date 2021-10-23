@@ -70,7 +70,7 @@ class _BookPageState extends State<BookPage> {
 
   _buildScheduleDate() {
     int? count = 0;
-    int? length = schedList.length;
+    int? length = schedList.length - 1;
     DateTime? getScheduleList;
     return Padding(
       padding: EdgeInsets.all(10.0),
@@ -99,10 +99,17 @@ class _BookPageState extends State<BookPage> {
           //   }
           // }
 
-          if (date.month == schedList[2].month &&
-              date.day == schedList[2].day) {
-            return false;
+          for (var i = 0; i <= length; i++) {
+            if (date.month == schedList[i].month &&
+                date.year == schedList[i].year &&
+                date.day == schedList[i].day) {
+              return false;
+            }
           }
+          // if (date.month == schedList[0].month &&
+          //     date.day == schedList[0].day) {
+          //   return false;
+          // }
 
           if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
             return false;
