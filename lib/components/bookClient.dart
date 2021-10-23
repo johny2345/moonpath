@@ -287,8 +287,8 @@ class _BookPageState extends State<BookPage> {
                               'BPI',
                               'Union Bank',
                               'RCBC',
-                              '7-eleven',
-                              'Credit/Debit'
+                              'Bayad Center',
+                              'Credit/Debit',
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -317,9 +317,6 @@ class _BookPageState extends State<BookPage> {
                     clipBehavior: Clip.hardEdge,
                     onPressed: () {
                       // Apis().getDetails();
-                      setState(() {
-                        isLoading = true;
-                      });
                       bookCustomer();
                     },
                     child: Text('BOOK NOW'),
@@ -381,99 +378,108 @@ class _BookPageState extends State<BookPage> {
         _instructions =
             "You will be redirected to the chosen bank's webpage Login to your GCash Account,You will receive a One-Time PIN (OTP) to your registered mobile number. Authorize the payment";
       });
-    } else if (paymentMethod == '7-eleven') {
+    } else if (paymentMethod == 'Bayad Center') {
       setState(() {
-        channel = '711_direct';
+        channel = 'bayad_center';
         _instructions =
             'Present the barcode or reference number, Pay the specified amount,	The Cashier will process your payment in real-time';
       });
-    }
-    var timeFormat = _time.format(context);
-    DateTime today = DateTime.now();
-    // print(today.year);
-    // print(today.month);
-    String? requestID = 'req_' +
-        today.year.toString() +
-        today.month.toString() +
-        today.day.toString() +
-        today.hour.toString() +
-        today.second.toString() +
-        today.millisecond.toString();
-    // print(requestID);
+    } else if (paymentMethod == 'Credit/Debit') {
+      setState(() {
+        channel = 'visamc';
+        _instructions =
+            "You will be redirected to the Xendit webpage, You will be prompted to enter your Card DetailsYou will receive a One-Time PIN (OTP) to your registered mobile number, Authorize the payment";
+      });
+      var timeFormat = _time.format(context);
+      DateTime today = DateTime.now();
+      // print(today.year);
+      // print(today.month);
+      String? requestID = 'req_' +
+          today.year.toString() +
+          today.month.toString() +
+          today.day.toString() +
+          today.hour.toString() +
+          today.second.toString() +
+          today.millisecond.toString();
+      // print(requestID);
 
-    // print('---------------------------$today---------------');
-    // print('get data: $_date $_timeController $_time');
-    // print('----------------->$timeFormat $paymentMethod');
-    final formState = _formKey.currentState;
-    if (formState!.validate()) {
-      formState.save();
-      try {
-        print('------PAYMENT paymentMethod-----------');
-        print(paymentMethod);
-        if (paymentMethod != '' && paymentMethod != null) {
-          Apis()
-              .buxBookRequest(
-                  requestID,
-                  amount,
-                  selectedDate,
-                  description,
-                  channel,
-                  email,
-                  contactNumber,
-                  name,
-                  _instructions,
-                  paymentMethod)
-              .then((value) {
-            print('------PAYMENT URL DUY-----------');
-            String? paymentUrl = value.data['payment_url'];
-            print('------$paymentUrl-----------');
-            setState(() {
-              isLoading = false;
+      // print('---------------------------$today---------------');
+      // print('get data: $_date $_timeController $_time');
+      // print('----------------->$timeFormat $paymentMethod');
+      final formState = _formKey.currentState;
+      if (formState!.validate()) {
+        formState.save();
+        setState(() {
+          isLoading = true;
+        });
+        try {
+          print('------PAYMENT paymentMethod-----------');
+          print(paymentMethod);
+          if (paymentMethod != '' && paymentMethod != null) {
+            Apis()
+                .buxBookRequest(
+                    requestID,
+                    amount,
+                    selectedDate,
+                    description,
+                    channel,
+                    email,
+                    contactNumber,
+                    name,
+                    _instructions,
+                    paymentMethod)
+                .then((value) {
+              print('------PAYMENT URL DUY-----------');
+              String? paymentUrl = value.data['payment_url'];
+              print('------$paymentUrl-----------');
+              setState(() {
+                isLoading = false;
+              });
+              if (value != false) {
+                WidgetProperties().displayAnimatedDialog(
+                    context,
+                    name,
+                    selectedDate,
+                    description,
+                    email,
+                    contactNumber,
+                    amount,
+                    _instructions,
+                    paymentMethod,
+                    paymentUrl);
+              } else {
+                WidgetProperties().invalidDialog(
+                    context,
+                    'Error Processing Order',
+                    'Please check your Internet connection');
+              }
             });
-            if (value != false) {
-              WidgetProperties().displayAnimatedDialog(
-                  context,
-                  name,
-                  selectedDate,
-                  description,
-                  email,
-                  contactNumber,
-                  amount,
-                  _instructions,
-                  paymentMethod,
-                  paymentUrl);
-            } else {
-              WidgetProperties().invalidDialog(
-                  context,
-                  'Error Processing Order',
-                  'Please check your Internet connection');
-            }
+          } else {
+            print('should display dialog!================+++++');
+            WidgetProperties()
+                .invalidDialog(context, 'INPUT FIELDS',
+                    'Please choose your payment method')
+                .then((value) {
+              setState(() {
+                isLoading = false;
+              });
+            });
+          }
+        } catch (e) {
+          setState(() {
+            isLoading = false;
           });
-        } else {
-          print('should display dialog!================+++++');
           WidgetProperties()
-              .invalidDialog(
-                  context, 'INPUT FIELDS', 'Please choose your payment method')
-              .then((value) {
-            setState(() {
-              isLoading = false;
-            });
-          });
+              .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
         }
-      } catch (e) {
+        // setState(() {
+        //   isLoading = false;
+        // });
+      } else {
         setState(() {
           isLoading = false;
         });
-        WidgetProperties()
-            .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
       }
-      // setState(() {
-      //   isLoading = false;
-      // });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
     }
   }
 }
