@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:logger/logger.dart';
 import 'package:moonpath/api/apiProvider.dart';
+import 'package:moonpath/widgets/widgetProperties.dart';
 
 class Apis {
   String? baseUrl = 'https://api.bux.ph/v1/api/sandbox';
@@ -33,12 +34,10 @@ class Apis {
     try {
       Response response = await dio.post(
         url,
-        options: Options(
-            receiveTimeout: 3000,
-            followRedirects: false,
-            validateStatus: (status) {
-              return status! <= 500;
-            },
+        options: Options(receiveTimeout: 3000, followRedirects: false,
+            // validateStatus: (status) {
+            //   return status! <= 500;
+            // },
             headers: {"Content-Type": "application/json", 'x-api-key': apiKey}),
         data: {
           'req_id': reqId,
@@ -55,23 +54,27 @@ class Apis {
               'https://www.facebook.com/Moonpath-travel-and-tours-103570147872534',
           'param1': instructions,
           'param2': '',
-          "cust_shoulder": 0
+          "cust_shoulder": 1
         },
       );
-      ApiProvider().addBookRequest(
-          reqId,
-          amount,
-          description,
-          channel,
-          email,
-          contact,
-          name,
-          selectedDate,
-          response.data['ref_code'],
-          response.data['image_url'],
-          response.data['payment_url'],
-          'Pending',
-          paymentMethod);
+      if (response.data != null) {
+        ApiProvider().addBookRequest(
+            reqId,
+            amount,
+            description,
+            channel,
+            email,
+            contact,
+            name,
+            selectedDate,
+            response.data['ref_code'],
+            response.data['image_url'],
+            response.data['payment_url'],
+            'Pending',
+            paymentMethod);
+      } else {
+        return false;
+      }
       print('-----------------THIS IS THE RESPONSE GENERATED----------------');
       print(response);
       print('-----------------THIS IS THE RESPONSE GENERATED----------------');
@@ -79,7 +82,7 @@ class Apis {
     } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout) {
         print('timeout err');
-        throw Exception('Connection timeout exception');
+        // throw Exception('Connection timeout exception');
       }
       print('-----------------CATCHING ERROR--------------');
       print(e.response!.statusCode);

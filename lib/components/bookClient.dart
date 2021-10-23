@@ -287,7 +287,8 @@ class _BookPageState extends State<BookPage> {
                               'BPI',
                               'Union Bank',
                               'RCBC',
-                              '7-eleven'
+                              '7-eleven',
+                              'Credit/Debit'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -429,17 +430,24 @@ class _BookPageState extends State<BookPage> {
             setState(() {
               isLoading = false;
             });
-            WidgetProperties().displayAnimatedDialog(
-                context,
-                name,
-                selectedDate,
-                description,
-                email,
-                contactNumber,
-                amount,
-                _instructions,
-                paymentMethod,
-                paymentUrl);
+            if (value != false) {
+              WidgetProperties().displayAnimatedDialog(
+                  context,
+                  name,
+                  selectedDate,
+                  description,
+                  email,
+                  contactNumber,
+                  amount,
+                  _instructions,
+                  paymentMethod,
+                  paymentUrl);
+            } else {
+              WidgetProperties().invalidDialog(
+                  context,
+                  'Error Processing Order',
+                  'Please check your Internet connection');
+            }
           });
         } else {
           print('should display dialog!================+++++');
