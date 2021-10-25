@@ -78,7 +78,6 @@ class _BookPageState extends State<BookPage> {
         type: DateTimePickerType.date,
         //dateMask: 'yyyy/MM/dd',
         controller: _dateController,
-        // initialValue: DateTime.now().toString(),
         firstDate: DateTime(2020),
         lastDate: DateTime(2100),
         icon: Icon(Icons.event),
@@ -87,17 +86,6 @@ class _BookPageState extends State<BookPage> {
         selectableDayPredicate: (date) {
           print(
               'GET DATE------------------------$length@@@@@@@@@@@@@@@@@@@@------');
-          // for (DateTime element in schedList) {
-          //   count = count! + 1;
-          //   getScheduleList = element!.year;
-          //   print('get satisfied');
-          //   if (date.year == getScheduleList!.year &&
-          //       date.month == getScheduleList!.month &&
-          //       date.day == getScheduleList!.day) {
-          //     print('satisfied');
-          //     return false;
-          //   }
-          // }
 
           for (var i = 0; i <= length; i++) {
             if (date.month == schedList[i].month &&
@@ -142,9 +130,7 @@ class _BookPageState extends State<BookPage> {
           title: Text('Book now'),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: _userInputDetailsForm(context),
-        ),
+        body: _userInputDetailsForm(context),
       );
     }
   }
@@ -317,7 +303,9 @@ class _BookPageState extends State<BookPage> {
                     clipBehavior: Clip.hardEdge,
                     onPressed: () {
                       // Apis().getDetails();
-                      bookCustomer();
+                      if (_formKey.currentState!.validate()) {
+                        bookCustomer();
+                      }
                     },
                     child: Text('BOOK NOW'),
                   ),
@@ -331,9 +319,9 @@ class _BookPageState extends State<BookPage> {
   }
 
   Future<dynamic> bookCustomer() async {
-    DateTime selectedDate =
-        DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
-    print('Selected date: $selectedDate');
+    // DateTime selectedDate =
+    //     DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
+    // print('Selected date: $selectedDate');
     String? channel, _instructions = '';
     // name = "Wawangski Malakas";
     // _instructions =
@@ -406,80 +394,72 @@ class _BookPageState extends State<BookPage> {
       // print('---------------------------$today---------------');
       // print('get data: $_date $_timeController $_time');
       // print('----------------->$timeFormat $paymentMethod');
-      final formState = _formKey.currentState;
-      if (formState!.validate()) {
-        formState.save();
-        setState(() {
-          isLoading = true;
-        });
-        try {
-          print('------PAYMENT paymentMethod-----------');
-          print(paymentMethod);
-          if (paymentMethod != '' && paymentMethod != null) {
-            Apis()
-                .buxBookRequest(
-                    requestID,
-                    amount,
-                    selectedDate,
-                    description,
-                    channel,
-                    email,
-                    contactNumber,
-                    name,
-                    _instructions,
-                    paymentMethod)
-                .then((value) {
-              print('------PAYMENT URL DUY-----------');
-              String? paymentUrl = value.data['payment_url'];
-              print('------$paymentUrl-----------');
-              setState(() {
-                isLoading = false;
-              });
-              if (value != false) {
-                WidgetProperties().displayAnimatedDialog(
-                    context,
-                    name,
-                    selectedDate,
-                    description,
-                    email,
-                    contactNumber,
-                    amount,
-                    _instructions,
-                    paymentMethod,
-                    paymentUrl);
-              } else {
-                WidgetProperties().invalidDialog(
-                    context,
-                    'Error Processing Order',
-                    'Please check your Internet connection');
-              }
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        print('------PAYMENT paymentMethod-----------');
+        print(paymentMethod);
+        if (paymentMethod != '' && paymentMethod != null) {
+          Apis()
+              .buxBookRequest(
+                  requestID,
+                  amount,
+                  selectedDate,
+                  description,
+                  channel,
+                  email,
+                  contactNumber,
+                  name,
+                  _instructions,
+                  paymentMethod)
+              .then((value) {
+            print('------PAYMENT URL DUY-----------');
+            String? paymentUrl = value.data['payment_url'];
+            print('------$paymentUrl-----------');
+            setState(() {
+              isLoading = false;
             });
-          } else {
-            print('should display dialog!================+++++');
-            WidgetProperties()
-                .invalidDialog(context, 'INPUT FIELDS',
-                    'Please choose your payment method')
-                .then((value) {
-              setState(() {
-                isLoading = false;
-              });
-            });
-          }
-        } catch (e) {
-          setState(() {
-            isLoading = false;
+            if (value != false) {
+              WidgetProperties().displayAnimatedDialog(
+                  context,
+                  name,
+                  selectedDate,
+                  description,
+                  email,
+                  contactNumber,
+                  amount,
+                  _instructions,
+                  paymentMethod,
+                  paymentUrl);
+            } else {
+              WidgetProperties().invalidDialog(
+                  context,
+                  'Error Processing Order',
+                  'Please check your Internet connection');
+            }
           });
+        } else {
+          print('should display dialog!================+++++');
           WidgetProperties()
-              .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
+              .invalidDialog(
+                  context, 'INPUT FIELDS', 'Please choose your payment method')
+              .then((value) {
+            setState(() {
+              isLoading = false;
+            });
+          });
         }
-        // setState(() {
-        //   isLoading = false;
-        // });
-      } else {
+      } catch (e) {
         setState(() {
           isLoading = false;
         });
+        WidgetProperties()
+            .invalidDialog(context, 'ERROR CREDS', 'Basin wrong chui');
       }
+      // setState(() {
+      //   isLoading = false;
+      // })
     }
   }
 }
