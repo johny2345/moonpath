@@ -39,10 +39,10 @@ class _BookPageState extends State<BookPage> {
     print('CALL A FUNCTION!');
     ApiProvider().getSchedules().then((querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        debugPrint('GET SCHEDULE');
+        // debugPrint('GET SCHEDULE');
         setState(() {
           schedList.add(doc['schedule'].toDate());
-          print(doc['schedule'].toDate());
+          // print(doc['schedule'].toDate());
         });
       });
     });
@@ -71,49 +71,59 @@ class _BookPageState extends State<BookPage> {
   _buildScheduleDate() {
     int? count = 0;
     int? length = schedList.length - 1;
-    DateTime? getScheduleList;
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: DateTimePicker(
-        type: DateTimePickerType.date,
-        //dateMask: 'yyyy/MM/dd',
-        controller: _dateController,
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2100),
-        icon: Icon(Icons.event),
-        dateLabelText: 'Date',
-        // locale: Locale('pt', 'BR'),
-        selectableDayPredicate: (date) {
-          print(
-              'GET DATE------------------------$length@@@@@@@@@@@@@@@@@@@@------');
-
-          for (var i = 0; i <= length; i++) {
-            if (date.month == schedList[i].month &&
-                date.year == schedList[i].year &&
-                date.day == schedList[i].day) {
-              return false;
-            }
-          }
-          // if (date.month == schedList[0].month &&
-          //     date.day == schedList[0].day) {
-          //   return false;
-          // }
-
-          if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+    bool? getCurr;
+    DateTime? dateToday = DateTime.now();
+    return DateTimePicker(
+      type: DateTimePickerType.date,
+      //dateMask: 'yyyy/MM/dd',
+      controller: _dateController,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2100),
+      icon: Icon(Icons.event),
+      dateLabelText: 'Date',
+      // locale: Locale('pt', 'BR'),
+      selectableDayPredicate: (date) {
+        print('-----------RUNNING FOR LOOP FUNC---------------------');
+        for (var i = 0; i <= length; i++) {
+          print('------------------------------------------');
+          getCurr = schedList[i].year == dateToday.year &&
+              schedList[i].month == dateToday.month &&
+              schedList[i].day == dateToday.day;
+          // print(schedList[i].year != dateToday.year &&
+          //     schedList[i].month != dateToday.month &&
+          //     schedList[i].day != dateToday.day);
+          // print('------------------------------------------');
+          if (date.month == schedList[i].month &&
+              date.year == schedList[i].year &&
+              date.day == schedList[i].day &&
+              getCurr != true) {
+            print(schedList[i].year.toString() +
+                ' ' +
+                schedList[i].month.toString() +
+                ' ' +
+                schedList[i].day.toString());
+            print('SULOD CHOI!');
             return false;
-          } else {
-            return true;
           }
-        },
-        onChanged: (val) => setState(() {
-          _date = DateTime.parse(val);
-        }),
-        validator: (input) {
-          if (input == null || input == '') {
-            return 'Please choose date';
-          }
-        },
-      ),
+        }
+        if (date.month == schedList[1].month && date.day == schedList[1].day) {
+          return false;
+        }
+
+        if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+      onChanged: (val) => setState(() {
+        _date = DateTime.parse(val);
+      }),
+      validator: (input) {
+        if (input == null || input == '') {
+          return 'Please choose date';
+        }
+      },
     );
   }
 
