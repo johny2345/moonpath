@@ -15,13 +15,17 @@ class BookPage extends StatefulWidget {
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 bool? isLoading = false;
+bool? getCurr = false;
 
 String? email;
 String? contactNumber;
 String? name;
+String? getMonth, dateFormatter;
 String? description;
 String? paymentMethod;
 String? amount = '25000';
+
+DateTime? dateMatchedToday;
 
 var schedList = [];
 
@@ -42,7 +46,6 @@ class _BookPageState extends State<BookPage> {
         // debugPrint('GET SCHEDULE');
         setState(() {
           schedList.add(doc['schedule'].toDate());
-          // print(doc['schedule'].toDate());
         });
       });
     });
@@ -69,71 +72,107 @@ class _BookPageState extends State<BookPage> {
   }
 
   _buildScheduleDate() {
-    int? count = 0;
+    bool? verifierDateToday = false;
+    getCurr = false;
     int? length = schedList.length - 1;
-    bool? getCurr;
     DateTime? dateToday = DateTime.now();
-    return DateTimePicker(
-      type: DateTimePickerType.date,
-      //dateMask: 'yyyy/MM/dd',
-      controller: _dateController,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2100),
-      icon: Icon(Icons.event),
-      dateLabelText: 'Date',
-      // locale: Locale('pt', 'BR'),
-      selectableDayPredicate: (date) {
-        print('-----------RUNNING FOR LOOP FUNC---------------------');
-        for (var i = 0; i <= length; i++) {
-          print('------------------------------------------');
-          getCurr = schedList[i].year == dateToday.year &&
-              schedList[i].month == dateToday.month &&
-              schedList[i].day == dateToday.day;
-          // print(schedList[i].year != dateToday.year &&
-          //     schedList[i].month != dateToday.month &&
-          //     schedList[i].day != dateToday.day);
-          // print('------------------------------------------');
-          if (date.month == schedList[i].month &&
-              date.year == schedList[i].year &&
-              date.day == schedList[i].day &&
-              getCurr != true) {
-            print(schedList[i].year.toString() +
-                ' ' +
-                schedList[i].month.toString() +
-                ' ' +
-                schedList[i].day.toString());
-            print('SULOD CHOI!');
+    print('------DATE TODAY: $dateToday');
+    print('------Length TODAY: $length ------------------');
+    if (length <= 0) {
+      return Container();
+    } else {
+      return DateTimePicker(
+        type: DateTimePickerType.date,
+        //dateMask: 'yyyy/MM/dd',
+        controller: _dateController,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2100),
+        icon: Icon(Icons.event),
+        dateLabelText: 'Date',
+        // locale: Locale('en', 'US'),
+        selectableDayPredicate: (date) {
+          for (var i = 0; i <= length; i++) {
+            // temp = date.month == schedList[i].month &&
+            //     date.year == schedList[i].year &&
+            //     date.day == schedList[i].day;
+
+            if (getCurr == false) {
+              getCurr = schedList[i].year == dateToday.year &&
+                  schedList[i].month == dateToday.month &&
+                  schedList[i].day == dateToday.day;
+              verifierDateToday = true;
+
+              dateMatchedToday = schedList[i];
+            }
+            // bool? temp2 = getCurr != true;
+            // print('---------Generated sched: $temp');
+            // print('---------CONDITIONAL get curr: $getCurr');
+            if (date.month == schedList[i].month &&
+                date.year == schedList[i].year &&
+                date.day == schedList[i].day &&
+                getCurr != true) {
+              return false;
+            }
+            getCurr = false;
+            // print('-------------------GET loop-----------------------');
+
+            // print(schedList[i].month.toString() +
+            //     '-' +
+            //     schedList[i].day.toString() +
+            //     ' ' +
+            //     schedList[i].year.toString());
+            // print('VS');
+            // print(dateToday.month.toString() +
+            //     '-' +
+            //     dateToday.day.toString() +
+            //     dateToday.year.toString() +
+            //     'EQUALS: ' +
+            //     getCurr.toString());
+
+          }
+          if (date.month == schedList[1].month &&
+              date.day == schedList[1].day) {
             return false;
           }
-        }
-        if (date.month == schedList[1].month && date.day == schedList[1].day) {
-          return false;
-        }
+          // print('--------------CURR DATE IS TRUE: $getCurr ------------------');
 
-        if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
-          return false;
-        } else {
-          return true;
-        }
-      },
-      onChanged: (val) => setState(() {
-        _date = DateTime.parse(val);
-      }),
-      validator: (input) {
-        if (input == null || input == '') {
-          return 'Please choose date';
-        }
-      },
-    );
+          if (verifierDateToday == true) {
+            dateFormatter = dateToday.year.toString() +
+                '-' +
+                dateToday.month.toString() +
+                '-' +
+                dateToday.day.toString();
+
+            print('DATE FORMATTER FOR TODAY: $dateFormatter');
+          }
+
+          if (date.isBefore(DateTime.now().subtract(Duration(days: 1)))) {
+            return false;
+          } else {
+            return true;
+          }
+        },
+        onChanged: (val) => setState(() {
+          _date = DateTime.parse(val);
+        }),
+        validator: (input) {
+          print('------GET VALIDATION $input------------------');
+          print('------GET Date Formatter $dateFormatter------------------');
+          if (input == null || input == '') {
+            return 'Please choose date';
+          } else if (input == dateFormatter) {
+            return 'Date not allowed';
+          }
+        },
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
-      print('should display loading screen=================');
       return WidgetProperties().loadingProgress(context);
     } else {
-      print('should not display loading: $isLoading screen2=================');
       return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
