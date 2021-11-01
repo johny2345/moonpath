@@ -96,6 +96,7 @@ class _ClientRequestDetailPageState extends State<ClientRequestDetailPage> {
         child: Scaffold(
           appBar: AppBar(
             title: Text('Request Details'),
+            centerTitle: true,
           ),
           body: displayAnimatedDialog(context),
         ),

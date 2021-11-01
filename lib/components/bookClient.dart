@@ -33,7 +33,6 @@ var _timeController = TextEditingController();
 var _dateController = TextEditingController();
 
 TimeOfDay _time = TimeOfDay.now().replacing(minute: 00);
-DateTime _date = DateTime.now();
 DateTime selectedDate = DateTime.now();
 
 class _BookPageState extends State<BookPage> {
@@ -76,8 +75,8 @@ class _BookPageState extends State<BookPage> {
     getCurr = false;
     int? length = schedList.length - 1;
     DateTime? dateToday = DateTime.now();
-    print('------DATE TODAY: $dateToday');
-    print('------Length TODAY: $length ------------------');
+    // print('------DATE TODAY: $dateToday');
+    // print('------Length TODAY: $length ------------------');
     if (length <= 0) {
       return Container();
     } else {
@@ -114,21 +113,6 @@ class _BookPageState extends State<BookPage> {
               return false;
             }
             getCurr = false;
-            // print('-------------------GET loop-----------------------');
-
-            // print(schedList[i].month.toString() +
-            //     '-' +
-            //     schedList[i].day.toString() +
-            //     ' ' +
-            //     schedList[i].year.toString());
-            // print('VS');
-            // print(dateToday.month.toString() +
-            //     '-' +
-            //     dateToday.day.toString() +
-            //     dateToday.year.toString() +
-            //     'EQUALS: ' +
-            //     getCurr.toString());
-
           }
           if (date.month == schedList[1].month &&
               date.day == schedList[1].day) {
@@ -153,7 +137,7 @@ class _BookPageState extends State<BookPage> {
           }
         },
         onChanged: (val) => setState(() {
-          _date = DateTime.parse(val);
+          selectedDate = DateTime.parse(val);
         }),
         validator: (input) {
           print('------GET VALIDATION $input------------------');

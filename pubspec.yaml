@@ -49,6 +49,7 @@ dependencies:
     # firebase: ^9.0.1
 
     syncfusion_flutter_calendar: ^19.3.44
+    table_calendar: ^3.0.3
     logger: ^1.1.0
     flutter_animated_dialog: ^2.0.1
 

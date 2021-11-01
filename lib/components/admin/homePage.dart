@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:moonpath/widgets/map_display.dart';
 import 'package:readmore/readmore.dart';
 import 'package:moonpath/widgets/calendar.dart';
+import 'package:moonpath/widgets/tableCalendar.dart';
 import 'package:moonpath/widgets/image_carousel.dart';
 import 'package:moonpath/widgets/video_background.dart';
 import 'package:moonpath/components/faq.dart';
@@ -147,8 +148,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 title: const Text('Calendar'),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CalendarScreen()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => StartPage()));
                 },
               ),
               Divider(

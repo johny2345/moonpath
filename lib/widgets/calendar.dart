@@ -100,6 +100,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         eventColor: Colors.teal,
         eventDoneColor: Colors.green,
         selectedColor: Colors.pink,
+        hideBottomBar: true,
         todayColor: Colors.blue,
         locale: 'en_US',
         todayButtonText: 'Today',
