@@ -140,8 +140,6 @@ class _BookPageState extends State<BookPage> {
           selectedDate = DateTime.parse(val);
         }),
         validator: (input) {
-          print('------GET VALIDATION $input------------------');
-          print('------GET Date Formatter $dateFormatter------------------');
           if (input == null || input == '') {
             return 'Please choose date';
           } else if (input == dateFormatter) {
@@ -184,7 +182,9 @@ class _BookPageState extends State<BookPage> {
                 children: <Widget>[
                   TextFormField(
                     onSaved: (String? input) {
-                      email = input;
+                      setState(() {
+                        email = input;
+                      });
                     },
                     validator: (input) {
                       if (input == null || input.isEmpty) {
@@ -216,7 +216,9 @@ class _BookPageState extends State<BookPage> {
                   ),
                   TextFormField(
                     onSaved: (String? input) {
-                      name = input;
+                      setState(() {
+                        name = input;
+                      });
                     },
                     validator: (input) {
                       if (input == null || input.isEmpty) {
@@ -259,7 +261,9 @@ class _BookPageState extends State<BookPage> {
                   TextFormField(
                     maxLines: 5,
                     onSaved: (String? input) {
-                      description = input;
+                      setState(() {
+                        description = input;
+                      });
                     },
                     validator: (input) {
                       if (input == null || input.isEmpty) {
@@ -337,6 +341,7 @@ class _BookPageState extends State<BookPage> {
                     onPressed: () {
                       // Apis().getDetails();
                       if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
                         bookCustomer();
                       }
                     },
@@ -355,7 +360,16 @@ class _BookPageState extends State<BookPage> {
     // DateTime selectedDate =
     //     DateTime(_date.year, _date.month, _date.day, _time.hour, _time.minute);
     // print('Selected date: $selectedDate');
+    DateTime? utcDate = selectedDate.toUtc();
+    DateTime? localDate = selectedDate.toLocal();
     String? channel, _instructions = '';
+    print('utcDate DATE: $utcDate');
+    print('localDate DATE: $localDate');
+    print('Name: $name');
+    print('Contact: $contactNumber');
+    print('Description: $description');
+    print('Email: $email');
+    print('Amount: $amount');
     // name = "Wawangski Malakas";
     // _instructions =
     //     'This is a sample description! hahahahah. The quick brown fox jumps over the lazy dog. why am I having a hard time using flutter. perhaps its because of the major change implemented by google developers to resolve the null issues that persist in most mobile applications for android and IOS. thanks you.';
@@ -434,44 +448,44 @@ class _BookPageState extends State<BookPage> {
         print('------PAYMENT paymentMethod-----------');
         print(paymentMethod);
         if (paymentMethod != '' && paymentMethod != null) {
-          Apis()
-              .buxBookRequest(
-                  requestID,
-                  amount,
-                  selectedDate,
-                  description,
-                  channel,
-                  email,
-                  contactNumber,
-                  name,
-                  _instructions,
-                  paymentMethod)
-              .then((value) {
-            print('------PAYMENT URL DUY-----------');
-            String? paymentUrl = value.data['payment_url'];
-            print('------$paymentUrl-----------');
-            setState(() {
-              isLoading = false;
-            });
-            if (value != false) {
-              WidgetProperties().displayAnimatedDialog(
-                  context,
-                  name,
-                  selectedDate,
-                  description,
-                  email,
-                  contactNumber,
-                  amount,
-                  _instructions,
-                  paymentMethod,
-                  paymentUrl);
-            } else {
-              WidgetProperties().invalidDialog(
-                  context,
-                  'Error Processing Order',
-                  'Please check your Internet connection');
-            }
-          });
+          //   Apis()
+          //       .buxBookRequest(
+          //           requestID,
+          //           amount,
+          //           localDate,
+          //           description,
+          //           channel,
+          //           email,
+          //           contactNumber,
+          //           name,
+          //           _instructions,
+          //           paymentMethod)
+          //       .then((value) {
+          //     print('------PAYMENT URL DUY-----------');
+          //     String? paymentUrl = value.data['payment_url'];
+          //     print('------$paymentUrl-----------');
+          //     setState(() {
+          //       isLoading = false;
+          //     });
+          //     if (value != false) {
+          //       WidgetProperties().displayAnimatedDialog(
+          //           context,
+          //           name,
+          //           selectedDate,
+          //           description,
+          //           email,
+          //           contactNumber,
+          //           amount,
+          //           _instructions,
+          //           paymentMethod,
+          //           paymentUrl);
+          //     } else {
+          //       WidgetProperties().invalidDialog(
+          //           context,
+          //           'Error Processing Order',
+          //           'Please check your Internet connection');
+          //     }
+          //   });
         } else {
           print('should display dialog!================+++++');
           WidgetProperties()

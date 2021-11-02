@@ -148,8 +148,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 title: const Text('Calendar'),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => StartPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CalendarScreen()));
                 },
               ),
               Divider(
