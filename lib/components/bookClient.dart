@@ -310,7 +310,6 @@ class _BookPageState extends State<BookPage> {
                               'BPI',
                               'Union Bank',
                               'RCBC',
-                              'Bayad Center',
                               'Credit/Debit',
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
@@ -365,11 +364,7 @@ class _BookPageState extends State<BookPage> {
     String? channel, _instructions = '';
     print('utcDate DATE: $utcDate');
     print('localDate DATE: $localDate');
-    print('Name: $name');
-    print('Contact: $contactNumber');
-    print('Description: $description');
-    print('Email: $email');
-    print('Amount: $amount');
+    print('PaymentMEthod: $paymentMethod');
     // name = "Wawangski Malakas";
     // _instructions =
     //     'This is a sample description! hahahahah. The quick brown fox jumps over the lazy dog. why am I having a hard time using flutter. perhaps its because of the major change implemented by google developers to resolve the null issues that persist in most mobile applications for android and IOS. thanks you.';
@@ -413,13 +408,15 @@ class _BookPageState extends State<BookPage> {
         _instructions =
             "You will be redirected to the chosen bank's webpage Login to your GCash Account,You will receive a One-Time PIN (OTP) to your registered mobile number. Authorize the payment";
       });
-    } else if (paymentMethod == 'Bayad Center') {
-      setState(() {
-        channel = 'bayad_center';
-        _instructions =
-            'Present the barcode or reference number, Pay the specified amount,	The Cashier will process your payment in real-time';
-      });
-    } else if (paymentMethod == 'Credit/Debit') {
+    }
+    // else if (paymentMethod == 'Bayad Center') {
+    //   setState(() {
+    //     channel = 'bayad_center';
+    //     _instructions =
+    //         'Present the barcode or reference number, Pay the specified amount,	The Cashier will process your payment in real-time';
+    //   });
+    // }
+    else if (paymentMethod == 'Credit/Debit') {
       setState(() {
         channel = 'visamc';
         _instructions =
