@@ -242,8 +242,8 @@ class WidgetProperties {
                 name,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
-              Text(email),
-              Text(contactNumber),
+              Text(email, style: TextStyle(color: Colors.black54)),
+              Text(contactNumber, style: TextStyle(color: Colors.black54)),
               SizedBox(
                 height: 10,
               ),
@@ -287,14 +287,14 @@ class WidgetProperties {
               SizedBox(
                 height: 15,
               ),
-              SizedBox(
-                height: 15,
-              ),
               Container(
                 color: Colors.grey[200],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(description, textAlign: TextAlign.center),
                     SizedBox(
                       height: 10,

@@ -31,7 +31,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         print(doc["schedule"].toDate());
         setState(() {
           _events.addAll({
-            DateTime(doc["schedule"].toDate().year,
+            DateTime(doc["schedule"].toDate().toLocal().year,
                 doc["schedule"].toDate().month, doc["schedule"].toDate().day): [
               CleanCalendarEvent(doc["name"],
                   startTime: DateTime(DateTime.now().year, DateTime.now().month,
