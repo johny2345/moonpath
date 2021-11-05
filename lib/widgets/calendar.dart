@@ -28,7 +28,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             desc = desc!.substring(0, 25) + '...';
           });
         }
-        print(doc["schedule"].toDate());
+        print(doc["schedule"].toDate().toLocal());
         setState(() {
           _events.addAll({
             DateTime(doc["schedule"].toDate().toLocal().year,
