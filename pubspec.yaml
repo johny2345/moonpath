@@ -33,11 +33,11 @@ dependencies:
     url_launcher: ^6.0.9
     map: ^1.0.0
     cached_network_image: ^3.1.0
-    flutter_clean_calendar: ^1.1.0
     json_annotation: ^4.1.0
     day_night_time_picker: ^1.0.0
     date_time_picker: ^2.1.0
     flutter_spinkit: ^5.1.0
+    flutter_clean_calendar: ^1.1.0
 
     dio: ^4.0.0
     get: ^4.3.8
@@ -48,7 +48,6 @@ dependencies:
     firebase_core: ^1.6.0
     # firebase: ^9.0.1
 
-    syncfusion_flutter_calendar: ^19.3.44
     table_calendar: ^3.0.3
     logger: ^1.1.0
     flutter_animated_dialog: ^2.0.1
