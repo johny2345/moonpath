@@ -37,12 +37,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Yacht Booking App',
       theme: ThemeData(
-        // brightness: Brightness.,
         fontFamily: 'Sansation',
         primaryTextTheme: Typography.whiteCupertino,
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
           bodyText1: TextStyle(

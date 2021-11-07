@@ -27,89 +27,94 @@ class _LoginPageState extends State<LoginPage> {
       return WidgetProperties().loadingProgress(context);
     } else {
       return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('LOGIN'),
-        ),
-        body: Builder(
-          builder: (BuildContext context) {
-            return Form(
-              key: _formKey,
-              child: SingleChildScrollView(
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  padding: const EdgeInsets.all(30.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextFormField(
-                          onSaved: (String? input) {
-                            _email = input;
-                          },
-                          validator: (input) {
-                            if (input == null || input.isEmpty) {
-                              return 'Please provide an email';
-                            }
-                          },
-                          decoration: InputDecoration(
-                              counterText: '',
-                              labelText: 'Enter email',
-                              icon: new Icon(Icons.mail)),
-                          autofocus: true,
-                          keyboardType: TextInputType.emailAddress,
-                          maxLength: 30),
-                      TextFormField(
-                        validator: (input) {
-                          if (input == null || input.isEmpty) {
-                            return 'Input password';
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text('LOGIN'),
+          ),
+          body: Center(
+            child: displayFormField(context),
+          ));
+    }
+  }
+
+  displayFormField(BuildContext context) {
+    return Builder(
+      builder: (BuildContext context) {
+        return Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextFormField(
+                      onSaved: (String? input) {
+                        _email = input;
+                      },
+                      validator: (input) {
+                        if (input == null || input.isEmpty) {
+                          return 'Please provide an email';
+                        }
+                      },
+                      decoration: InputDecoration(
+                          counterText: '',
+                          labelText: 'Enter email',
+                          icon: new Icon(Icons.mail)),
+                      autofocus: true,
+                      keyboardType: TextInputType.emailAddress,
+                      maxLength: 30),
+                  TextFormField(
+                    validator: (input) {
+                      if (input == null || input.isEmpty) {
+                        return 'Input password';
+                      }
+                    },
+                    onSaved: (input) => _password = input,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      labelText: 'Password',
+                      icon: new Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: _iconVisible,
+                        onPressed: () {
+                          if (_obscureText == true) {
+                            setState(() {
+                              _obscureText = false;
+                              _iconVisible = Icon(Icons.visibility_off);
+                            });
+                          } else {
+                            setState(() {
+                              _iconVisible = Icon(Icons.visibility);
+                              _obscureText = true;
+                            });
                           }
                         },
-                        onSaved: (input) => _password = input,
-                        decoration: InputDecoration(
-                          counterText: '',
-                          labelText: 'Password',
-                          icon: new Icon(Icons.lock),
-                          suffixIcon: IconButton(
-                            icon: _iconVisible,
-                            onPressed: () {
-                              if (_obscureText == true) {
-                                setState(() {
-                                  _obscureText = false;
-                                  _iconVisible = Icon(Icons.visibility_off);
-                                });
-                              } else {
-                                setState(() {
-                                  _iconVisible = Icon(Icons.visibility);
-                                  _obscureText = true;
-                                });
-                              }
-                            },
-                          ),
-                        ),
-                        obscureText: _obscureText,
-                        maxLength: 30,
                       ),
-                      new Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
-                      ),
-                      new ElevatedButton(
-                        clipBehavior: Clip.hardEdge,
-                        onPressed: () {
-                          toSignIn();
-                        },
-                        child: Text('LOGIN'),
-                      ),
-                    ],
+                    ),
+                    obscureText: _obscureText,
+                    maxLength: 30,
                   ),
-                ),
+                  new Padding(
+                    padding: const EdgeInsets.only(top: 40.0),
+                  ),
+                  new ElevatedButton(
+                    clipBehavior: Clip.hardEdge,
+                    onPressed: () {
+                      toSignIn();
+                    },
+                    child: Text('LOGIN'),
+                  ),
+                ],
               ),
-            );
-          },
-        ),
-      );
-    }
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Future getUser() async {
