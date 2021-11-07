@@ -25,7 +25,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         String? desc = (doc['description']);
         if (desc!.length >= 30) {
           setState(() {
-            desc = desc!.substring(0, 25) + '...';
+            desc = desc!.substring(0, 35) + '...';
           });
         }
         print(doc["schedule"].toDate().toLocal());

@@ -37,7 +37,10 @@ dependencies:
     day_night_time_picker: ^1.0.0
     date_time_picker: ^2.1.0
     flutter_spinkit: ^5.1.0
-    flutter_clean_calendar: ^1.1.0
+    # flutter_clean_calendar: ^1.1.0
+    flutter_clean_calendar:
+        git:
+            url: https://github.com/johny2345/flutter_clean_calendar
 
     dio: ^4.0.0
     get: ^4.3.8

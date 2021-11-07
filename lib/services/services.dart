@@ -87,7 +87,6 @@ class Apis {
       print('-----------------CATCHING ERROR--------------');
       print(e.response!.statusCode);
       print('the error: ' + e.response!.data['status']);
-      print('-----------------CATCHING ERROR--------------');
     }
   }
 

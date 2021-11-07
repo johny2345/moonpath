@@ -46,7 +46,6 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
   }
 
   _displayRequestList(BuildContext context, AsyncSnapshot snapshot) {
-    print('get list of request------------------------');
     String? month;
 
     print(snapshot.data.toString());
