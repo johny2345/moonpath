@@ -69,4 +69,8 @@ class ApiProvider {
   Future<void> updateAcceptRequest(documentId) {
     return bookRequest.doc(documentId).update({'isAccepted': true});
   }
+
+  Future<void> deleteApptRequest(documentId) {
+    return bookRequest.doc(documentId).delete();
+  }
 }
