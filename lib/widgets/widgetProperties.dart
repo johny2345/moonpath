@@ -19,11 +19,12 @@ class WidgetProperties {
     }
   }
 
-  final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-    textStyle: TextStyle(
-      fontSize: 10.0,
-    ),
+  final ButtonStyle bgRed = ElevatedButton.styleFrom(
     primary: Colors.red,
+  );
+
+  final ButtonStyle bgGreen = ElevatedButton.styleFrom(
+    primary: Colors.green,
   );
 
   loadingProgress(BuildContext context) {
@@ -36,17 +37,6 @@ class WidgetProperties {
           )),
     );
   }
-
-  // loadingProgress(BuildContext context) {
-  //   return Material(
-  //     child: Container(
-  //       alignment: Alignment.center,
-  //       child: Center(
-  //         child: CircularProgressIndicator(),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   contentBox(BuildContext context, name, selectedDate, description, email,
       contactNumber, amount, _instructions, paymentMethod, paymentUrl) {
@@ -410,7 +400,7 @@ class WidgetProperties {
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
-                  style: buttonStyle,
+                  style: bgRed,
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -454,6 +444,40 @@ class WidgetProperties {
                       Navigator.of(context).pop();
                     },
                   ))
+                ],
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> confirmationDialog(
+      BuildContext context, title, message, documentId) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text(title),
+            content: new Text(message),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  ElevatedButton(
+                    style: bgRed,
+                    child: Text('Confirm'),
+                    onPressed: () {
+                      print(documentId);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ElevatedButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ],
               ),
             ],
