@@ -130,6 +130,10 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                         scheduleFormatted: scheduleFormatted,
                         documentId: documentId)));
               },
+              onLongPress: () {
+                print('Delete functionality!');
+                print(documentId);
+              },
             ),
           ),
         );
