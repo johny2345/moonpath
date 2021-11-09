@@ -470,6 +470,7 @@ class WidgetProperties {
                     onPressed: () {
                       print(documentId);
                       Navigator.of(context).pop();
+                      displaySnackBar(context, 'Deleted successfully!');
                     },
                   ),
                   ElevatedButton(

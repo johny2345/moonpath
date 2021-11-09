@@ -28,7 +28,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             desc = desc!.substring(0, 35) + '...';
           });
         }
-        print(doc["schedule"].toDate().toLocal());
+        // print(doc["schedule"].toDate().toLocal());
         setState(() {
           _events.addAll({
             DateTime(doc["schedule"].toDate().toLocal().year,
@@ -61,7 +61,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
     _events = {};
     print('-get query func------------------------');
     _getQuery();
-    print('-get query func------------------------');
     _handleNewDate(DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day));
   }

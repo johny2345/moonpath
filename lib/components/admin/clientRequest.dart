@@ -131,9 +131,10 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                         documentId: documentId)));
               },
               onLongPress: () {
+                String? name = data['name'].toString();
                 print('Delete functionality!');
                 WidgetProperties().confirmationDialog(context, 'Confirmation',
-                    'Would like to delete this request?', documentId);
+                    "Would like to delete this request by $name?", documentId);
               },
             ),
           ),
