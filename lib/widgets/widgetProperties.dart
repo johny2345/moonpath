@@ -125,6 +125,9 @@ class WidgetProperties {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       description,
                       textAlign: TextAlign.center,
@@ -158,7 +161,7 @@ class WidgetProperties {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                       _launchInWebViewOrVC(paymentUrl);
                     },
                     child: Text(
@@ -372,14 +375,12 @@ class WidgetProperties {
         return SimpleDialog(
           clipBehavior: Clip.hardEdge,
           backgroundColor: Colors.blue[100],
-          insetPadding: EdgeInsets.all(10.0),
           title: const Text(
             'Checkout',
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
           children: <Widget>[
             Dialog(
-              insetPadding: EdgeInsets.all(10.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(Constants.padding),
               ),
@@ -469,8 +470,11 @@ class WidgetProperties {
                     child: Text('Confirm'),
                     onPressed: () {
                       print(documentId);
-                      Navigator.of(context).pop();
-                      displaySnackBar(context, 'Deleted successfully!');
+                      ApiProvider().deleteApptRequest(documentId).then((value) {
+                        print("This valie upon deletion $value");
+                        Navigator.of(context).pop();
+                        displaySnackBar(context, 'Deleted successfully!');
+                      });
                     },
                   ),
                   ElevatedButton(

@@ -56,9 +56,6 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
         var dateScheds = DateTime(requestDate!.year, requestDate.month,
                 requestDate.day, requestDate.hour)
             .toLocal();
-        print('-------------------------------------------------');
-        print('dateScheds: ' + dateScheds.toString());
-        print('testDate: ' + testDate.toString());
         if (requestDate.month == 1) {
           month = 'January';
         }
@@ -104,9 +101,6 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
             ',' +
             ' ' +
             requestDate.year.toString();
-        debugPrint(data['name'] + ' ' + data['schedule'].toDate().toString());
-        print('---------------GET DOCUMENT ID---------------------');
-        print(document.id);
         String? documentId = document.id;
         return Padding(
           padding: const EdgeInsets.only(bottom: 2.0),
@@ -122,8 +116,8 @@ class _ClientRequestPageState extends State<ClientRequestPage> {
                 setState(() {
                   scheduleFormatted = displayCal;
                 });
-                debugPrint(scheduleFormatted);
-                debugPrint(data['name'] + ' ' + data['timestamp'].toString());
+                // debugPrint(scheduleFormatted);
+                // debugPrint(data['name'] + ' ' + data['timestamp'].toString());
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ClientRequestDetailPage(
                         details: data,

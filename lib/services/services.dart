@@ -13,6 +13,8 @@ class Apis {
       channel, email, contact, name, instructions, paymentMethod) async {
     String? url = '$baseUrl/generate_code';
     print(url);
+    print(channel);
+    print(description);
 
     var formData = FormData.fromMap({
       'req_id': reqId,

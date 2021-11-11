@@ -70,7 +70,11 @@ class ApiProvider {
     return bookRequest.doc(documentId).update({'isAccepted': true});
   }
 
-  Future<void> deleteApptRequest(documentId) {
-    return bookRequest.doc(documentId).delete();
+  Future<dynamic> deleteApptRequest(documentId) {
+    var toDeleteRequest = bookRequest.doc(documentId).delete();
+    print('--------------------------------');
+    print(toDeleteRequest);
+    print('--------------------------------');
+    return toDeleteRequest;
   }
 }
