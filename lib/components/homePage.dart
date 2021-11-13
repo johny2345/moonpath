@@ -12,6 +12,7 @@ import 'package:moonpath/components/bookClient.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 import 'package:moonpath/components/admin/homePage.dart';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -77,9 +78,22 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
+  Future<void> initConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      print('-----CONNECTED MOBLE DATA-------');
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      print('----------CONNECTED WIFI NETWORK-------------');
+    } else {
+      print('---NOT CONNECTED----');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    initConnectivity();
+
     isLoading = true;
     getUser();
     isLoading = false;

@@ -156,13 +156,17 @@ class _BookPageState extends State<BookPage> {
       return WidgetProperties().loadingProgress(context);
     } else {
       return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text('Book now'),
-          centerTitle: true,
-        ),
-        body: _userInputDetailsForm(context),
-      );
+          resizeToAvoidBottomInset: true,
+          appBar: AppBar(
+            title: Text('Book now'),
+            centerTitle: true,
+          ),
+          body: SingleChildScrollView(
+            // reverse: true,
+            child: Container(
+              child: _userInputDetailsForm(context),
+            ),
+          ));
     }
   }
 
@@ -174,180 +178,178 @@ class _BookPageState extends State<BookPage> {
           child: Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextFormField(
-                    onSaved: (String? input) {
-                      setState(() {
-                        email = input;
-                      });
-                    },
-                    validator: (input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please provide your email';
-                      }
-                    },
-                    maxLength: 50,
-                    decoration: InputDecoration(
-                        counterText: '',
-                        labelText: 'Enter email',
-                        icon: new Icon(Icons.email)),
-                  ),
-                  TextFormField(
-                    onSaved: (String? input) {
-                      setState(() {
-                        contactNumber = input;
-                      });
-                    },
-                    validator: (input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please provide your contact #';
-                      }
-                    },
-                    maxLength: 15,
-                    decoration: InputDecoration(
-                        counterText: '',
-                        labelText: 'Enter phone number',
-                        icon: new Icon(Icons.phone)),
-                  ),
-                  TextFormField(
-                    onSaved: (String? input) {
-                      setState(() {
-                        name = input;
-                      });
-                    },
-                    validator: (input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please provide your name';
-                      }
-                    },
-                    maxLength: 30,
-                    decoration: InputDecoration(
-                        counterText: '',
-                        labelText: 'Enter your name',
-                        icon: new Icon(Icons.person)),
-                  ),
-                  TextFormField(
-                    onSaved: (String? input) {
-                      setState(() {
-                        amount = input;
-                      });
-                    },
-                    validator: (input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please provide amount';
-                      } else if (input.contains(new RegExp(r'[A-Z]'))) {
-                        return 'Please provide valid amount';
-                      }
-                    },
-                    maxLength: 6,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        counterText: '',
-                        labelText: 'Enter amount',
-                        icon: new Icon(Icons.money)),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _buildScheduleDate(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    maxLines: 5,
-                    onSaved: (String? input) {
-                      setState(() {
-                        description = input;
-                      });
-                    },
-                    validator: (input) {
-                      if (input == null || input.isEmpty) {
-                        return 'Please provide description';
-                      }
-                    },
-                    maxLength: 130,
-                    decoration: InputDecoration(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  onSaved: (String? input) {
+                    setState(() {
+                      email = input;
+                    });
+                  },
+                  validator: (input) {
+                    if (input == null || input.isEmpty) {
+                      return 'Please provide your email';
+                    }
+                  },
+                  maxLength: 50,
+                  decoration: InputDecoration(
                       counterText: '',
-                      labelText: 'Description...',
-                      icon: new Icon(Icons.description),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.grey, width: 2.0),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
+                      labelText: 'Enter email',
+                      icon: new Icon(Icons.email)),
+                ),
+                TextFormField(
+                  onSaved: (String? input) {
+                    setState(() {
+                      contactNumber = input;
+                    });
+                  },
+                  validator: (input) {
+                    if (input == null || input.isEmpty) {
+                      return 'Please provide your contact #';
+                    }
+                  },
+                  maxLength: 15,
+                  decoration: InputDecoration(
+                      counterText: '',
+                      labelText: 'Enter phone number',
+                      icon: new Icon(Icons.phone)),
+                ),
+                TextFormField(
+                  onSaved: (String? input) {
+                    setState(() {
+                      name = input;
+                    });
+                  },
+                  validator: (input) {
+                    if (input == null || input.isEmpty) {
+                      return 'Please provide your name';
+                    }
+                  },
+                  maxLength: 30,
+                  decoration: InputDecoration(
+                      counterText: '',
+                      labelText: 'Enter your name',
+                      icon: new Icon(Icons.person)),
+                ),
+                TextFormField(
+                  onSaved: (String? input) {
+                    setState(() {
+                      amount = input;
+                    });
+                  },
+                  validator: (input) {
+                    if (input == null || input.isEmpty) {
+                      return 'Please provide amount';
+                    } else if (input.contains(new RegExp(r'[A-Z]'))) {
+                      return 'Please provide valid amount';
+                    }
+                  },
+                  maxLength: 6,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      counterText: '',
+                      labelText: 'Enter amount',
+                      icon: new Icon(Icons.money)),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                _buildScheduleDate(),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  maxLines: 5,
+                  onSaved: (String? input) {
+                    setState(() {
+                      description = input;
+                    });
+                  },
+                  validator: (input) {
+                    if (input == null || input.isEmpty) {
+                      return 'Please provide description';
+                    }
+                  },
+                  maxLength: 130,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    labelText: 'Description...',
+                    icon: new Icon(Icons.description),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2.0),
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.grey[200],
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                          child: DropdownButton<String>(
-                            underline: Container(
-                              height: 0,
-                              color: Colors.red,
-                            ),
-                            value: paymentMethod,
-                            dropdownColor: Colors.grey[200],
-                            elevation: 10,
-                            isExpanded: true,
-                            icon: Icon(Icons.arrow_downward),
-                            items: <String>[
-                              'Gcash',
-                              'BPI',
-                              'Union Bank',
-                              'RCBC',
-                              'Credit/Debit',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            hint: Text("Mode of payment",
-                                style: TextStyle(
-                                  backgroundColor: Colors.grey[200],
-                                  color: Colors.black87,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.start),
-                            onChanged: (String? value) {
-                              setState(() {
-                                paymentMethod = value;
-                              });
-                            },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.grey[200],
+                        border: Border.all(color: Colors.grey),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                        child: DropdownButton<String>(
+                          underline: Container(
+                            height: 0,
+                            color: Colors.red,
                           ),
-                        )),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  new ElevatedButton(
-                    clipBehavior: Clip.hardEdge,
-                    onPressed: () {
-                      // Apis().getDetails();
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        bookCustomer();
-                      }
-                    },
-                    child: Text('BOOK NOW'),
-                  ),
-                ],
-              ),
+                          value: paymentMethod,
+                          dropdownColor: Colors.grey[200],
+                          elevation: 10,
+                          isExpanded: true,
+                          icon: Icon(Icons.arrow_downward),
+                          items: <String>[
+                            'Gcash',
+                            'BPI',
+                            'Union Bank',
+                            'RCBC',
+                            'Credit/Debit',
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          hint: Text("Mode of payment",
+                              style: TextStyle(
+                                backgroundColor: Colors.grey[200],
+                                color: Colors.black87,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.start),
+                          onChanged: (String? value) {
+                            setState(() {
+                              paymentMethod = value;
+                            });
+                          },
+                        ),
+                      )),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                new ElevatedButton(
+                  clipBehavior: Clip.hardEdge,
+                  onPressed: () {
+                    // Apis().getDetails();
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      bookCustomer();
+                    }
+                  },
+                  child: Text('BOOK NOW'),
+                ),
+              ],
             ),
           ),
         );
