@@ -156,28 +156,25 @@ class _BookPageState extends State<BookPage> {
       return WidgetProperties().loadingProgress(context);
     } else {
       return Scaffold(
-          resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            title: Text('Book now'),
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            // reverse: true,
-            child: Container(
-              child: _userInputDetailsForm(context),
-            ),
-          ));
+        // resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text('Book now'),
+          centerTitle: true,
+        ),
+        body: _userInputDetailsForm(context),
+      );
     }
   }
 
   Widget _userInputDetailsForm(BuildContext context) {
-    return Builder(
-      builder: (BuildContext context) {
-        return Form(
-          key: _formKey,
-          child: Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(20.0),
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            // reverse: true,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -349,11 +346,14 @@ class _BookPageState extends State<BookPage> {
                   },
                   child: Text('BOOK NOW'),
                 ),
+                SizedBox(
+                  height: 150,
+                ),
               ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -367,6 +367,9 @@ class _BookPageState extends State<BookPage> {
     print('utcDate DATE: $utcDate');
     print('localDate DATE: $localDate');
     print('PaymentMEthod: $paymentMethod');
+    print(name);
+    print(email);
+    print(description);
     // name = "Wawangski Malakas";
     // _instructions =
     //     'This is a sample description! hahahahah. The quick brown fox jumps over the lazy dog. why am I having a hard time using flutter. perhaps its because of the major change implemented by google developers to resolve the null issues that persist in most mobile applications for android and IOS. thanks you.';
@@ -438,38 +441,38 @@ class _BookPageState extends State<BookPage> {
       print('------PAYMENT paymentMethod-----------');
       print(paymentMethod);
       if (paymentMethod != null) {
-        setState(() {
-          isLoading = true;
-        });
-        Apis()
-            .buxBookRequest(requestID, amount, localDate, description, channel,
-                email, contactNumber, name, _instructions, paymentMethod)
-            .then((value) {
-          print('------PAYMENT URL DUY-----------');
-          String? paymentUrl = value.data['payment_url'];
-          print('------$paymentUrl-----------');
-          setState(() {
-            isLoading = false;
-          });
-          if (value != false) {
-            WidgetProperties().displayAnimatedDialog(
-                context,
-                name,
-                selectedDate,
-                description,
-                email,
-                contactNumber,
-                amount,
-                _instructions,
-                paymentMethod,
-                paymentUrl);
-          } else {
-            WidgetProperties().invalidDialog(
-                context,
-                'Error Processing Request',
-                'Please check your Internet connection');
-          }
-        });
+        // setState(() {
+        //   isLoading = true;
+        // });
+        // Apis()
+        //     .buxBookRequest(requestID, amount, localDate, description, channel,
+        //         email, contactNumber, name, _instructions, paymentMethod)
+        //     .then((value) {
+        //   print('------PAYMENT URL DUY-----------');
+        //   String? paymentUrl = value.data['payment_url'];
+        //   print('------$paymentUrl-----------');
+        //   setState(() {
+        //     isLoading = false;
+        //   });
+        //   if (value != false) {
+        //     WidgetProperties().displayAnimatedDialog(
+        //         context,
+        //         name,
+        //         selectedDate,
+        //         description,
+        //         email,
+        //         contactNumber,
+        //         amount,
+        //         _instructions,
+        //         paymentMethod,
+        //         paymentUrl);
+        //   } else {
+        //     WidgetProperties().invalidDialog(
+        //         context,
+        //         'Error Processing Request',
+        //         'Please check your Internet connection');
+        //   }
+        // });
       } else {
         print('should display dialog!================+++++');
         WidgetProperties()
