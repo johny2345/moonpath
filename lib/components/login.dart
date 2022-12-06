@@ -148,7 +148,6 @@ class _LoginPageState extends State<LoginPage> {
     final formState = _formKey.currentState;
     if (formState!.validate()) {
       formState.save();
-      print('password: ' + _password.toString());
       try {
         UserCredential user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
