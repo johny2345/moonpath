@@ -162,7 +162,6 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(builder: (context) => AdminHomePage()),
           (Route<dynamic> route) => false,
         );
-        pri
       } on FirebaseAuthException catch (e) {
         print('-------------THE USER HAS NOT LOGGED IN-----------------------');
         print(e.code);
