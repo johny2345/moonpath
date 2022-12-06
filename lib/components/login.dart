@@ -163,7 +163,6 @@ class _LoginPageState extends State<LoginPage> {
           (Route<dynamic> route) => false,
         );
         print(user);
-        print('-------------THE USER $user-----------------------');
       } on FirebaseAuthException catch (e) {
         print('-------------THE USER HAS NOT LOGGED IN-----------------------');
         print(e.code);
