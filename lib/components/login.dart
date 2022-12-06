@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = false;
       });
       // WidgetProperties()
-      //     .invalidDialog(context, 'INPUT FIELDS', 'Butang
+      //     .invalidDialog(context, 'INPUT FIELDS', '
     }
   }
 }
