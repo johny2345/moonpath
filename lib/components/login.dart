@@ -124,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
         print('----------------------------------------------');
         print('User not logged in!');
       } else {
-        print('-----------------------------------------');
         print('User signed in!');
       }
     });
