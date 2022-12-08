@@ -74,7 +74,7 @@ class ApiProvider {
     var toDeleteRequest = bookRequest.doc(documentId).delete();
     print('--------------------');
     print(toDeleteRequest);
-    print('--------------------------------');
+    print('-----------------------------');
     return toDeleteRequest;
   }
 }
