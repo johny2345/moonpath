@@ -83,7 +83,7 @@ class _HomepageState extends State<Homepage> {
     if (connectivityResult == ConnectivityResult.mobile) {
       print('-----CONNECTED MOBLE DATA-------');
     } else if (connectivityResult == ConnectivityResult.wifi) {
-      print('----------CONNECTED WIFI NETWORK-------------');
+      print('----------CONNECTED WIFI NETWORK--------');
     } else {
       print('---NOT CONNECTED----');
     }
