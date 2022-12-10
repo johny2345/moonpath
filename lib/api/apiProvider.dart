@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebasese_core.dart';
 import 'package:moonpath/widgets/widgetProperties.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -72,7 +72,7 @@ class ApiProvider {
 
   Future<dynamic> deleteApptRequest(documentId) {
     var toDeleteRequest = bookRequest.doc(documentId).delete();
-    print('--------------------');
+    print('------------------');
     print(toDeleteRequest);
     return toDeleteRequest;
   }
