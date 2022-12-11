@@ -71,7 +71,7 @@ class ApiProvider {
 
   Future<dynamic> deleteApptRequest(documentId) {
     var toDeleteRequest = bookRequest.doc(documentId).delete();
-    print('------------------');
+    print('--------');
     print(toDeleteRequest);
     return toDeleteRequest;
   }
