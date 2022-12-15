@@ -121,7 +121,6 @@ class _LoginPageState extends State<LoginPage> {
     FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
       user = checkUser;
       if (user == null) {
-        print('User not logged in!');
       } else {
         print('User signed in!');
       }
