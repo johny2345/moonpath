@@ -22,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // ApiProvider().signOut();
     if (isLoading == true) {
       return WidgetProperties().loadingProgress(context);
     } else {
