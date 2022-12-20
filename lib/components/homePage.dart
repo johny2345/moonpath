@@ -80,7 +80,7 @@ class _HomepageState extends State<Homepage> {
   Future<void> initConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
-      print('-----CONNECTED MOBLE DATA-------');
+      print('-----CONNECTED MOBLE DATA-----');
     } else if (connectivityResult == ConnectivityResult.wifi) {
       print('----------CONNECTED WIFI NETWORK--------');
     } else {}
