@@ -57,7 +57,6 @@ class ApiProvider {
   getSchedules() async {
     var listOfRequest = await bookRequest.get();
 
-    print(listOfRequest);
     return listOfRequest;
   }
 
