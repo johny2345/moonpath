@@ -493,6 +493,5 @@ class _BookPageState extends State<BookPage> {
     }
     // setState(() {
     //   isLoading = false;
-    // })
   }
 }
