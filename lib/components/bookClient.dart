@@ -422,7 +422,6 @@ class _BookPageState extends State<BookPage> {
     }
     var timeFormat = _time.format(context);
     DateTime today = DateTime.now();
-    // print(today.month);
     String? requestID = 'req_' +
         today.year.toString() +
         today.month.toString() +
