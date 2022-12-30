@@ -430,7 +430,6 @@ class _BookPageState extends State<BookPage> {
         today.second.toString() +
         today.millisecond.toString();
 
-    // print('----------
     // print('get data: $_date $_timeController $_time');
     // print('----------------->$timeFormat $paymentMethod');
 
