@@ -318,7 +318,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
                     height: 30,
                   ),
                   Row(
-                    // mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       IconButton(
