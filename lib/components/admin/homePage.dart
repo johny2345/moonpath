@@ -64,7 +64,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
     FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
       user = checkUser;
       if (user == null) {
-        print('----------------------------------------------');
+        print('--------------------------------
         print('User not logged in!');
       } else {
         print('----------------------------------------------');
