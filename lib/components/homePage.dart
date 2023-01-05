@@ -60,7 +60,7 @@ _launchEmail() async {
 
 class _HomepageState extends State<Homepage> {
   Future getUser() async {
-    print('-------------------------------------');
+    print('--------------------
     FirebaseAuth.instance.authStateChanges().listen((User? checkUser) {
       user = checkUser;
       if (user == null) {
