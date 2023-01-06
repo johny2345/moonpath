@@ -65,7 +65,6 @@ class _HomepageState extends State<Homepage> {
       if (user == null) {
         print('User not logged in!');
       } else {
-        print('--------------
         print('User signed in!');
         Navigator.pushAndRemoveUntil(
           context,
